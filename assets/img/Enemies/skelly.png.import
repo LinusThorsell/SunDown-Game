@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/slime.png-a3f8ad08e9951dcfc89db77a5b728bd5.stex"
+path="res://.import/skelly.png-ac7c595245efa2e4fb5c173ad86a9fe4.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/characters/slime.png"
-dest_files=[ "res://.import/slime.png-a3f8ad08e9951dcfc89db77a5b728bd5.stex" ]
+source_file="res://assets/img/Enemies/skelly.png"
+dest_files=[ "res://.import/skelly.png-ac7c595245efa2e4fb5c173ad86a9fe4.stex" ]
 
 [params]
 
