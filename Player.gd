@@ -4,6 +4,7 @@ extends KinematicBody2D
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
+const ArrowScene = preload("res://Arrow.tscn")
 
 export var player_speed = 400
 var screen_size
@@ -56,7 +57,14 @@ func handle_tools():
 	# rotate overlayed tool
 	$ToolOverlay.look_at(get_global_mouse_position())
 	$ToolOverlay.rotation_degrees -= 225
-
+	
+	if (Input.is_action_just_pressed("mouse_left")):
+#		print(get_viewport().get_mouse_position())
+		var EntetieScene = get_parent().find_node("Enteties")
+		var ArrowInstance = ArrowScene.instance()
+		EntetieScene.add_child(ArrowInstance)
+		ArrowInstance.fire(get_global_mouse_position(), position)
+		
 func _process(delta):
 	handle_movement()
 	handle_tools()

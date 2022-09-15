@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Main.gd" type="Script" id=2]
 [ext_resource path="res://assets/img/Pipoya RPG Tileset 32x32/[Base]BaseChip_pipo.png" type="Texture" id=3]
 [ext_resource path="res://assets/img/Pipoya RPG Tileset 32x32/SampleMap/[A]Grass_pipo.png" type="Texture" id=4]
 [ext_resource path="res://Enemy_Skelly.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Arrow.tscn" type="PackedScene" id=6]
 
 [sub_resource type="TileSet" id=7]
 0/name = "Bush-LG"
@@ -620,7 +621,6 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 32, 64, 32 )
 script = ExtResource( 2 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 65, 59 )
 z_index = 2
 
 [node name="Level" type="Node" parent="."]
@@ -647,8 +647,12 @@ format = 1
 
 [node name="Enemies" type="Node" parent="Level"]
 
-[node name="Enemy_Skelly" parent="Level/Enemies" instance=ExtResource( 5 )]
+[node name="Enemy_Skelly" parent="Level/Enemies" groups=["mobs"] instance=ExtResource( 5 )]
 position = Vector2( -30, 183 )
+
+[node name="Enteties" type="Node" parent="Level"]
+
+[node name="Arrow" parent="Level/Enteties" instance=ExtResource( 6 )]
 
 [node name="HUD" type="CanvasLayer" parent="."]
 

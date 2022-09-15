@@ -15,16 +15,13 @@ func _ready():
 #func _process(delta):
 #	pass
 
-func _process(delta):
-	#update healthbar
-	$Healthbar.text = "health: " + str(health)
-	
-	# walk towards player
+func walk_to_player():
 	velocity = Vector2.ZERO
 	if (player != null):
 		velocity = position.direction_to(Vector2(player.position.x + 16, player.position.y + 16)) * run_speed
 	velocity = move_and_slide(velocity)
-	
+
+func set_accurate_sprite():
 	if (velocity.length() > 0):
 		if abs(velocity.x) > abs(velocity.y):
 			if velocity.x < 0:
@@ -43,8 +40,26 @@ func _process(delta):
 	else:
 		$AnimatedSprite.play(last_animation_frame)
 
+func _process(delta):
+	#update healthbar
+	$Healthbar.text = "health: " + str(health)
+	
+	# walk towards player
+	walk_to_player()
+	set_accurate_sprite()
+
+func hit(type): # called by things that hit the unit
+	if (type == "Arrow"):
+#		print("Skeleton hit by arrow")
+		health -= 5
+	
+	if (health <= 0):
+		get_node(".").queue_free()
+		
+		# TODO: drop loot maybe?
+
 func _on_DetectRadius_body_entered(body):
-	if(body.name != "Enemy_Skelly"):
+	if(body.name == "Player"):
 		player = body
 
 func _on_DetectRadius_body_exited(body):
