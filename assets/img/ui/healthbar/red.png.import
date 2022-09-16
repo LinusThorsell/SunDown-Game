@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/trees-and-bushes.png-bdba826bde0d467139ae1d2a625df240.stex"
+path="res://.import/red.png-f91a77f16cf0e5512e4940867b76929c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/img/world/trees-and-bushes.png"
-dest_files=[ "res://.import/trees-and-bushes.png-bdba826bde0d467139ae1d2a625df240.stex" ]
+source_file="res://assets/img/ui/healthbar/red.png"
+dest_files=[ "res://.import/red.png-f91a77f16cf0e5512e4940867b76929c.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
@@ -31,5 +31,5 @@ process/invert_color=false
 process/normal_map_invert_y=false
 stream=false
 size_limit=0
-detect_3d=true
+detect_3d=false
 svg/scale=1.0

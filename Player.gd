@@ -5,17 +5,23 @@ extends KinematicBody2D
 # var a = 2
 # var b = "text"
 const ArrowScene = preload("res://Arrow.tscn")
+const HealthDisplayScene = preload("res://HealthDisplay.tscn")  # todo fix all this shit
 
 export var player_speed = 400
 var screen_size
 var lastwalk = "standing_down";
+
+var healthbar
+var max_health = 100
+var health = 100
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	screen_size = get_viewport_rect().size
 	position.x = 100
 	position.y = 100
-	#pass
+	
+	healtbar = $
 
 func handle_movement():
 	# moving code
@@ -64,7 +70,11 @@ func handle_tools():
 		var ArrowInstance = ArrowScene.instance()
 		EntetieScene.add_child(ArrowInstance)
 		ArrowInstance.fire(get_global_mouse_position(), position)
-		
+
+func update_health():
+	$Healthbar.text = "health: " + str(health)
+	
 func _process(delta):
 	handle_movement()
 	handle_tools()
+	update_health()

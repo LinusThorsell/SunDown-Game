@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/player_standing_down.png-5f67a277edd9a5d032fec733196f45bf.stex"
+path="res://.import/green.png-cb855c1c17e5734f97e42f169be0da25.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/img/player/player_standing_down.png"
-dest_files=[ "res://.import/player_standing_down.png-5f67a277edd9a5d032fec733196f45bf.stex" ]
+source_file="res://assets/img/ui/healthbar/green.png"
+dest_files=[ "res://.import/green.png-cb855c1c17e5734f97e42f169be0da25.stex" ]
 
 [params]
 
