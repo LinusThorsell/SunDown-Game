@@ -7,9 +7,10 @@
 script = ExtResource( 2 )
 
 [node name="Healthbar" type="TextureProgress" parent="."]
-margin_left = -100.0
-margin_top = -40.0
-margin_right = 100.0
-margin_bottom = -14.0
+margin_left = -14.0
+margin_top = -10.0
+margin_right = 186.0
+margin_bottom = 16.0
+rect_scale = Vector2( 0.3, 0.3 )
 value = 100.0
 texture_progress = ExtResource( 1 )

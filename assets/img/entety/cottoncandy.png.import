@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/bow.png-a8cff9103f9a28d03fb56069a4e846c7.stex"
+path="res://.import/cottoncandy.png-748aaae703a245ba92df3c7c07f9a0a3.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/img/tools/bow.png"
-dest_files=[ "res://.import/bow.png-a8cff9103f9a28d03fb56069a4e846c7.stex" ]
+source_file="res://assets/img/entety/cottoncandy.png"
+dest_files=[ "res://.import/cottoncandy.png-748aaae703a245ba92df3c7c07f9a0a3.stex" ]
 
 [params]
 

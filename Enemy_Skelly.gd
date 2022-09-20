@@ -4,11 +4,20 @@ export var run_speed = 0
 var velocity = Vector2.ZERO
 var player = null
 var last_animation_frame = "standing_down"
+
+var healthbar
 var health = 100
+var max_health = 100
+
+const HealthDisplayScene = preload("res://HealthDisplay.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	healthbar = HealthDisplayScene.instance()
+	add_child(healthbar)
+	
+	healthbar.position = Vector2(healthbar.position.x-16, healthbar.position.y-16)
+#	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -41,9 +50,6 @@ func set_accurate_sprite():
 		$AnimatedSprite.play(last_animation_frame)
 
 func _process(delta):
-	#update healthbar
-	$Healthbar.text = "health: " + str(health)
-	
 	# walk towards player
 	walk_to_player()
 	set_accurate_sprite()
@@ -56,6 +62,8 @@ func hit(type): # called by things that hit the unit
 	if (health <= 0):
 		get_node(".").queue_free()
 		
+	healthbar.update_healthbar(health)
+	
 		# TODO: drop loot maybe?
 
 func _on_DetectRadius_body_entered(body):

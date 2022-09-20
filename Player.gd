@@ -5,7 +5,7 @@ extends KinematicBody2D
 # var a = 2
 # var b = "text"
 const ArrowScene = preload("res://Arrow.tscn")
-const HealthDisplayScene = preload("res://HealthDisplay.tscn")  # todo fix all this shit
+const HealthDisplayScene = preload("res://HealthDisplay.tscn")
 
 export var player_speed = 400
 var screen_size
@@ -21,7 +21,9 @@ func _ready():
 	position.x = 100
 	position.y = 100
 	
-	healtbar = $
+	healthbar = HealthDisplayScene.instance()
+	add_child(healthbar)
+	
 
 func handle_movement():
 	# moving code
@@ -62,7 +64,7 @@ func handle_movement():
 func handle_tools():
 	# rotate overlayed tool
 	$ToolOverlay.look_at(get_global_mouse_position())
-	$ToolOverlay.rotation_degrees -= 225
+#	$ToolOverlay.rotation_degrees -= 180
 	
 	if (Input.is_action_just_pressed("mouse_left")):
 #		print(get_viewport().get_mouse_position())
@@ -72,9 +74,11 @@ func handle_tools():
 		ArrowInstance.fire(get_global_mouse_position(), position)
 
 func update_health():
-	$Healthbar.text = "health: " + str(health)
+	healthbar.update_healthbar(health)
 	
 func _process(delta):
 	handle_movement()
 	handle_tools()
 	update_health()
+	
+	

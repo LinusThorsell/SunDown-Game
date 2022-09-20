@@ -17,8 +17,13 @@ func fire(mouse, playerpos):
 	look_at(mouse)
 	rotation_degrees += 90
 	
-	direction = position.direction_to(mouse)
+	var rng = RandomNumberGenerator.new()
+	rng.randomize()
+	
+	direction = position.direction_to(Vector2(mouse.x + rng.randf_range(-5, 5), mouse.y + rng.randf_range(-5, 5)))
 	position += direction.normalized()*35
+	
+	speed -= rng.randf_range(0, 2)
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
