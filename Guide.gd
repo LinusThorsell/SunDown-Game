@@ -8,6 +8,9 @@ extends Area2D
 var CurrentPath
 var last_animation_frame = "standing_down"
 
+var last_location = -1
+var should_walk = true
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	CurrentPath = $Paths/HelpPlayer/PathFollow2D
@@ -35,8 +38,26 @@ func updatesprite(velocity): # TODO: bryt ut pls <3
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-#	last_camera_location = PathToFollow.get_offset()
-	if (CurrentPath):
+	if (!CurrentPath):
+		pass
+	
+	if (should_walk && CurrentPath.get_offset() == last_location):
+		should_walk = false
+		print("Hey wake up...")
+		$SpeechBubble.set_text("Hey what are you doing out here? ...", 3)
+		yield(get_tree().create_timer(3.0),"timeout")
+		$SpeechBubble.set_text("Hello?", 1)
+		yield(get_tree().create_timer(1.0),"timeout")
+		$SpeechBubble.set_text("HEY!?!", 1)
+		yield(get_tree().create_timer(1.0),"timeout")
+		$SpeechBubble.set_text("Are you dead? wake up!!!", 2)
+		yield(get_tree().create_timer(2.0),"timeout")
+		
+		
+		
+	if (should_walk):
+		last_location = CurrentPath.get_offset()
+		
 		CurrentPath.set_offset(CurrentPath.get_offset() + 20 * delta)
 #		print(CurrentPath.position)
 		var direction = Vector2(CurrentPath.position.x - position.x, CurrentPath.position.y - position.y).normalized()

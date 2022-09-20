@@ -13,7 +13,7 @@ func _ready():
 	
 	healthbar = $Healthbar
 	
-#	hide()
+	hide()
 	if (get_parent() and get_parent().get("max_health")):
 		print(get_parent().max_health)
 		healthbar.max_value = get_parent().max_health
@@ -30,6 +30,6 @@ func update_healthbar(value):
 			healthbar.texture_progress = bar_yellow
 		if value < healthbar.max_value * 0.35:
 			healthbar.texture_progress = bar_red
-#		if value < healthbar.max_value:
-#			show()
+		if value < healthbar.max_value:
+			show()
 		healthbar.value = value

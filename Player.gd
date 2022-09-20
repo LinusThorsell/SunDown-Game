@@ -77,6 +77,10 @@ func handle_tools():
 func update_health():
 	healthbar.update_healthbar(health)
 	
+func ask_player(options): # TODO: IMPLEMENT
+	print(options)
+	return options[0]
+	
 func _process(delta):
 	handle_movement()
 	handle_tools()
