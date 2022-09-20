@@ -18,12 +18,13 @@ var health = 100
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	screen_size = get_viewport_rect().size
-	position.x = 100
-	position.y = 100
 	
 	healthbar = HealthDisplayScene.instance()
 	add_child(healthbar)
 	
+
+func setPos(vector):
+	position = vector
 
 func handle_movement():
 	# moving code
@@ -80,5 +81,7 @@ func _process(delta):
 	handle_movement()
 	handle_tools()
 	update_health()
+	
+#	print(position)
 	
 	
