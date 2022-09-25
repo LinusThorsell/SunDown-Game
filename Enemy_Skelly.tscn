@@ -110,6 +110,7 @@ frames = SubResource( 9 )
 animation = "standing_right"
 
 [node name="Area2D" type="Area2D" parent="."]
+scale = Vector2( 1.5, 1.5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource( 10 )

@@ -65,6 +65,9 @@ func hit(type): # called by things that hit the unit
 	healthbar.update_healthbar(health)
 	
 		# TODO: drop loot maybe?
+		
+func follow_path(path):
+	print(path)
 
 func _on_DetectRadius_body_entered(body):
 	if(body.name == "Player"):

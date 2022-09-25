@@ -4,7 +4,7 @@
 [ext_resource path="res://assets/MinimalPixel.ttf" type="DynamicFontData" id=2]
 
 [sub_resource type="DynamicFont" id=2]
-size = 48
+size = 70
 extra_spacing_space = 1
 font_data = ExtResource( 2 )
 
@@ -16,15 +16,13 @@ script = ExtResource( 1 )
 [node name="Anchor" type="Node2D" parent="."]
 
 [node name="ColorRect" type="ColorRect" parent="Anchor"]
-margin_bottom = 48.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+margin_bottom = 70.0
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Anchor"]
 margin_left = 8.0
 margin_top = 8.0
-margin_bottom = 48.0
+margin_right = 8.0
+margin_bottom = 78.0
 custom_colors/default_color = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = SubResource( 2 )
 bbcode_enabled = true
