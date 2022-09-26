@@ -22,6 +22,7 @@ var player_offset_when_following = 40
 
 func push_start():
 	if (interaction == -1):
+		main_node.get_node("HUD/ColorRect/AnimationPlayer").play("Fade In")
 		interaction = 0
 		should_walk = true
 
@@ -93,27 +94,30 @@ func _process(delta):
 			$AnimatedSprite.play("standing_down")
 			
 			$SpeechBubble.set_text("Look over there...", 4)
+			yield(get_tree().create_timer(2.0),"timeout")
 			player_node.update_sprite(Vector2(0,0), "standing_right")
+			print("Sending camera to look at skellys")
 			main_node.make_camera_follow_path(0.1699, main_node.get_node("CameraPaths/IntroShowSkelly/Follow/IntroShowSkellyCam"), main_node.get_node("CameraPaths/IntroShowSkelly/Follow"), 30)
 			yield(get_tree().create_timer(20.0),"timeout")
+			print("Back after looking at skellys")
 			$SpeechBubble.set_text("The dead rise from their graves at SunDown...", 5)
-			yield(get_tree().create_timer(4.0),"timeout")
+			yield(get_tree().create_timer(6.0),"timeout")
 			$SpeechBubble.set_text("And since the unspokent event happened...", 5) 
-			yield(get_tree().create_timer(4.0),"timeout")
+			yield(get_tree().create_timer(6.0),"timeout")
 			$SpeechBubble.set_text("the sun has not come back...", 5)
-			yield(get_tree().create_timer(4.0),"timeout")
+			yield(get_tree().create_timer(6.0),"timeout")
 			$SpeechBubble.set_text("So they currently roam freely, creating havoc here...", 5)
-			yield(get_tree().create_timer(4.0),"timeout")
+			yield(get_tree().create_timer(6.0),"timeout")
 			
-			$SpeechBubble.set_text("I am currently the guard on duty...", 4)
-			yield(get_tree().create_timer(3.0),"timeout")
-			$SpeechBubble.set_text("So i will not be able to follow you further...", 4)
-			yield(get_tree().create_timer(3.0),"timeout")
-			$SpeechBubble.set_text("Head south west from here and you should be safe.", 4)
-			yield(get_tree().create_timer(3.0),"timeout")
-			$SpeechBubble.set_text("My name's Guide, now, good luck, you will need it", 4)
-			yield(get_tree().create_timer(3.0),"timeout")
-			
+			$SpeechBubble.set_text("I am currently the guard on duty...", 5)
+			yield(get_tree().create_timer(5.0),"timeout")
+			$SpeechBubble.set_text("So i will not be able to follow you further...", 5)
+			yield(get_tree().create_timer(5.0),"timeout")
+			$SpeechBubble.set_text("Head south west from here and you should be safe.", 5)
+			yield(get_tree().create_timer(5.0),"timeout")
+			$SpeechBubble.set_text("My name's Guide, now, good luck, you will need it", 5)
+			yield(get_tree().create_timer(5.0),"timeout")
+		
 			interaction = 2
 			print("Done: SkellyIntro, now playing StandToGuard path")
 			CurrentPath = $Paths/StandToGuard/PathFollow2D
@@ -124,10 +128,11 @@ func _process(delta):
 		elif (interaction == 2):
 			$AnimatedSprite.play("standing_left")
 			player_node.locked_in_place = false
+			print("Releasing player after Guide interaction")
 			
-#			print("Releasing player, and enabling Skelly_Intro cutscene")
-#			player_node.cutscenes_played[0] = false;
-#			player_node.locked_in_place = true;
+			# TODO: for demo only
+			main_node.get_node("HUD/Consumables").show()
+			
 			
 		print("interaction complete")
 		

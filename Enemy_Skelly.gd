@@ -2,12 +2,14 @@ extends KinematicBody2D
 
 export var run_speed = 0
 var velocity = Vector2.ZERO
-var player = null
+var object_to_follow = null
 var last_animation_frame = "standing_down"
 
 var healthbar
 var health = 100
 var max_health = 100
+
+var bodies_inside_radius = []
 
 const HealthDisplayScene = preload("res://HealthDisplay.tscn")
 
@@ -25,10 +27,20 @@ func _ready():
 #	pass
 
 func walk_to_player():
+	object_to_follow = null
 	velocity = Vector2.ZERO
-	if (player != null):
-		velocity = position.direction_to(Vector2(player.position.x + 16, player.position.y + 16)) * run_speed
-	velocity = move_and_slide(velocity)
+	
+	if (bodies_inside_radius.size() > 0):
+#		print("Array is non-zero, find suitable target to follow: " + str(bodies_inside_radius))
+		for i in range(0, bodies_inside_radius.size()):
+			if (bodies_inside_radius[i].is_in_group("distractions")):
+				object_to_follow = bodies_inside_radius[i]
+		if (object_to_follow == null): # ifthere are no distractions follow player
+			object_to_follow = bodies_inside_radius[0]
+	
+		velocity = position.direction_to(Vector2(object_to_follow.position.x + 16, object_to_follow.position.y + 16)).normalized() * run_speed
+#		print("Skelly walking: " +  str(velocity))
+		velocity = move_and_slide(velocity)
 
 func set_accurate_sprite():
 	if (velocity.length() > 0):
@@ -55,6 +67,7 @@ func _process(delta):
 	set_accurate_sprite()
 
 func hit(type): # called by things that hit the unit
+	print("Got hit by: " + str(type))
 	if (type == "Arrow"):
 #		print("Skeleton hit by arrow")
 		health -= 5
@@ -70,8 +83,17 @@ func follow_path(path):
 	print(path)
 
 func _on_DetectRadius_body_entered(body):
-	if(body.name == "Player"):
-		player = body
+	if (body.is_in_group("followables")):
+		print("Adding: " + str(body))
+		bodies_inside_radius.append(body)
+#	if(body.name == "Candy"): #distract the skelly
+#		player = body
+#	elif(body.name == "Player"):
+#		player = body
 
 func _on_DetectRadius_body_exited(body):
-	player = null
+	if (body.is_in_group("followables")):
+		print("Removing: " + str(body))
+		bodies_inside_radius.remove(bodies_inside_radius.find(body))
+	
+#	player = null

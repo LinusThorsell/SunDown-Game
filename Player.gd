@@ -5,6 +5,7 @@ extends KinematicBody2D
 # var a = 2
 # var b = "text"
 const ArrowScene = preload("res://Arrow.tscn")
+const CandyScene = preload("res://Candy.tscn")
 const HealthDisplayScene = preload("res://HealthDisplay.tscn")
 
 export var player_speed = 400
@@ -15,11 +16,11 @@ var healthbar
 var max_health = 100
 var health = 100
 
-var locked_in_place = false
+var locked_in_place = true
 
 var selection = -1
 
-var arrows_left = 0
+var arrows_left = 30
 var candy_left = 5
 var selected_tool = "Bow"
 
@@ -29,8 +30,7 @@ func _ready():
 	
 	healthbar = HealthDisplayScene.instance()
 	add_child(healthbar)
-	get_parent().get_node("HUD/Remaining").text = "Arrows Left: " + str(arrows_left) + "\n" + "Candy Left: " + str(candy_left)
-	
+	get_parent().get_node("HUD/Consumables/Remaining").text = "Arrows Left: " + str(arrows_left) + "\n" + "Candy Left: " + str(candy_left)
 
 func setPos(vector):
 	position = vector
@@ -109,12 +109,12 @@ func handle_tools():
 	# rotate overlayed tool
 	$ToolOverlay.look_at(get_global_mouse_position())
 	if (selected_tool == "Bow"):
-		get_parent().get_node("HUD/SelectedTool").play("bow")
-		get_parent().get_node("HUD/CurrentlyUsingName").text = "Bow <scroll>"
+		get_parent().get_node("HUD/Consumables/SelectedTool").play("bow")
+		get_parent().get_node("HUD/Consumables/CurrentlyUsingName").text = "Bow <scroll>"
 		$ToolOverlay.play("bow")
 	elif (selected_tool == "Candy"):
-		get_parent().get_node("HUD/SelectedTool").play("candy")
-		get_parent().get_node("HUD/CurrentlyUsingName").text = "Candy <scroll>"
+		get_parent().get_node("HUD/Consumables/SelectedTool").play("candy")
+		get_parent().get_node("HUD/Consumables/CurrentlyUsingName").text = "Candy <scroll>"
 		$ToolOverlay.play("candy")
 #	$ToolOverlay.rotation_degrees -= 180
 	
@@ -125,9 +125,16 @@ func handle_tools():
 		EntetieScene.add_child(ArrowInstance)
 		ArrowInstance.fire(get_global_mouse_position(), position)
 		arrows_left -= 1
+	if (Input.is_action_just_pressed("mouse_left") and !locked_in_place and selected_tool == "Candy" and candy_left > 0):
+#		print(get_viewport().get_mouse_position())
+		var EntetieScene = get_parent().find_node("Enteties")
+		var CandyInstance = CandyScene.instance()
+		EntetieScene.add_child(CandyInstance)
+		CandyInstance.fire(get_global_mouse_position(), position)
+		candy_left -= 1
 		
 		
-	get_parent().get_node("HUD/Remaining").text = "Arrows Left: " + str(arrows_left) + "\n" + "Candy Left: " + str(candy_left);
+	get_parent().get_node("HUD/Consumables/Remaining").text = "Arrows Left: " + str(arrows_left) + "\n" + "Candy Left: " + str(candy_left);
 
 func update_health():
 	healthbar.update_healthbar(health)

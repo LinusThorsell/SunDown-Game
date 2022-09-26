@@ -8,13 +8,14 @@ extends Node2D
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	print("Starting: Intro cutscene")
+	$HUD/Consumables.hide()
 	
-	#make_camera_follow_path(0.1699, $CameraPaths/Intro/Follow/IntroCam, $CameraPaths/Intro/Follow, 200)
+	make_camera_follow_path(0.1699, $CameraPaths/Intro/Follow/IntroCam, $CameraPaths/Intro/Follow, 200)
 	
 	$HUD/ColorRect/AnimationPlayer.play("Fade In")
-#	yield($HUD/ColorRect/AnimationPlayer, "animation_finished")
-#	$HUD/ColorRect/AnimationPlayer.play("Fade Out")
-#	yield($HUD/ColorRect/AnimationPlayer, "animation_finished")
+	yield($HUD/ColorRect/AnimationPlayer, "animation_finished")
+	$HUD/ColorRect/AnimationPlayer.play("Fade Out")
+	yield($HUD/ColorRect/AnimationPlayer, "animation_finished")
 	#pass # Replace with function body.
 
 var should_camera_move = true
@@ -40,8 +41,6 @@ func make_camera_follow_path(delta, camera, path, speed):
 		
 		$Level/Enteties/Guide.push_start()
 #		$Player.setPos(Vector2(-100, -100))
-#		$HUD/ColorRect/AnimationPlayer.play("Fade In")
-#		$Level/Enteties/Guide.should_walk = true
 		
 	if (should_camera_move):
 		last_camera_location = PathToFollow.get_offset()
@@ -49,5 +48,5 @@ func make_camera_follow_path(delta, camera, path, speed):
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	#make_camera_follow_path(delta, FollowCamera, PathToFollow, CameraSpeed)
-	pass
+	make_camera_follow_path(delta, FollowCamera, PathToFollow, CameraSpeed)
+#	pass

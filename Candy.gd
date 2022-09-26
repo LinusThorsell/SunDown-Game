@@ -1,4 +1,4 @@
-extends Area2D
+extends KinematicBody2D
 
 
 # Declare member variables here.
@@ -10,10 +10,11 @@ var landed = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	add_to_group("followables")
+	add_to_group("distractions")
 
 func fire(mouse, playerpos):
-#	print("Fire arrow")
+#	print("Fire candy")
 	position = Vector2(playerpos.x + 16, playerpos.y + 16)
 	look_at(mouse)
 	rotation_degrees += 90
@@ -33,16 +34,9 @@ func _process(delta):
 		speed -= slowdown
 		slowdown += slowdown
 	elif (landed == false):
-		$CollisionShape2D.disabled = true
 		$DespawnTimer.start()
 #		print("starting timer")
 		landed = true
-
-func _on_Arrow_body_entered(body):
-	print("Hit something: " + str(body))
-	if (body.is_in_group("mobs")):
-		body.hit("Arrow")
-
 
 func _on_Timer_timeout():
 #	print("removing")
