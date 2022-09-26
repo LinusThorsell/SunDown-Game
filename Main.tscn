@@ -1001,7 +1001,7 @@ texture = ExtResource( 8 )
 [node name="Version" type="Label" parent="HUD"]
 margin_right = 83.0
 margin_bottom = 36.0
-text = "Sundown Alpha 0.4 Dev-Test"
+text = "Sundown Alpha 0.5 Dev-Test"
 
 [node name="ColorRect" type="ColorRect" parent="HUD"]
 margin_right = 1037.0

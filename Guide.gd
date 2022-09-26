@@ -115,6 +115,11 @@ func _process(delta):
 			yield(get_tree().create_timer(5.0),"timeout")
 			$SpeechBubble.set_text("Head south west from here and you should be safe.", 5)
 			yield(get_tree().create_timer(5.0),"timeout")
+			$SpeechBubble.set_text("But take this bow, arrow and some candy just to be safe.", 6)
+			yield(get_tree().create_timer(2.0),"timeout")
+			main_node.get_node("HUD/Consumables").show()
+			player_node.get_node("ToolOverlay").show()
+			yield(get_tree().create_timer(5.0),"timeout")
 			$SpeechBubble.set_text("My name's Guide, now, good luck, you will need it", 5)
 			yield(get_tree().create_timer(5.0),"timeout")
 		
@@ -129,10 +134,6 @@ func _process(delta):
 			$AnimatedSprite.play("standing_left")
 			player_node.locked_in_place = false
 			print("Releasing player after Guide interaction")
-			
-			# TODO: for demo only
-			main_node.get_node("HUD/Consumables").show()
-			
 			
 		print("interaction complete")
 		

@@ -9,6 +9,7 @@ extends Node2D
 func _ready():
 	print("Starting: Intro cutscene")
 	$HUD/Consumables.hide()
+	$Player/ToolOverlay.hide()
 	
 	make_camera_follow_path(0.1699, $CameraPaths/Intro/Follow/IntroCam, $CameraPaths/Intro/Follow, 200)
 	
