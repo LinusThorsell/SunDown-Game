@@ -16,7 +16,7 @@ var healthbar
 var max_health = 100
 var health = 100
 
-var locked_in_place = true
+export var locked_in_place = true
 
 var selection = -1
 
@@ -141,8 +141,16 @@ func update_health():
 	
 func ask_player(question, options):
 	get_parent().get_node("HUD/SelectionBox").show()
-	get_parent().get_node("HUD/SelectionBox/MainLabel").text = "Responding to: '" + question + "'\n[1] " + options[0] + "\n[2] " + options[1]
-	
+	if (options.size() == 1):
+		get_parent().get_node("HUD/SelectionBox/MainLabel").text = "Responding to: '" + question + "'\n[1] " + options[0]
+	elif (options.size() == 2):
+		get_parent().get_node("HUD/SelectionBox/MainLabel").text = "Responding to: '" + question + "'\n[1] " + options[0] + "\n[2] " + options[1]
+	elif (options.size() == 3):
+		get_parent().get_node("HUD/SelectionBox/MainLabel").text = "Responding to: '" + question + "'\n[1] " + options[0] + "\n[2] " + options[1] + "\n[3]" + options[2]
+	elif (options.size() == 4):
+		get_parent().get_node("HUD/SelectionBox/MainLabel").text = "Responding to: '" + question + "'\n[1] " + options[0] + "\n[2] " + options[1] + "\n[3]" + options[2] + "\n[4]" + options[3]
+	else:
+		print("Error in ask_player: question(" + question + ") options(" + options + ")")
 	lastwalk = "standing_down"
 	
 	var selected_option = -1;
@@ -194,3 +202,11 @@ func handle_cutscene_interception(cutscene):
 		print("Intro_Skelly initialized")
 		
 		get_parent().get_node("HUD/ColorRect/AnimationPlayer").play("Fade Out Fast")
+
+
+func _on_GuardsAtIntro_area_entered(area):
+	if (area.name == "CollisionArea"):
+		print("player")
+		locked_in_place = true
+		lastwalk = "standing_down"
+	#pass # Replace with function body.

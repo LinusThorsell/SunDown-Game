@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=2]
+[gd_scene load_steps=41 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Main.gd" type="Script" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://assets/img/misc/spaceship.png" type="Texture" id=8]
 [ext_resource path="res://assets/img/misc/block.png" type="Texture" id=9]
 [ext_resource path="res://GuardIsa.tscn" type="PackedScene" id=10]
+[ext_resource path="res://GuardGeneric.tscn" type="PackedScene" id=11]
 [ext_resource path="res://SelectionBox.tscn" type="PackedScene" id=13]
 [ext_resource path="res://assets/MinimalPixel.ttf" type="DynamicFontData" id=14]
 [ext_resource path="res://assets/img/tools/bow.png" type="Texture" id=15]
@@ -897,6 +898,9 @@ points = PoolVector2Array( 0, 32, 32, 32, 32, 64, 0, 64 )
 0/shapes = [  ]
 0/z_index = 0
 
+[sub_resource type="RectangleShape2D" id=44]
+extents = Vector2( 67, 4.75 )
+
 [sub_resource type="Animation" id=10]
 resource_name = "Fade In"
 length = 4.0
@@ -975,10 +979,12 @@ _data = {
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 2 )
+skip_cutscene = true
 
 [node name="Player" parent="." groups=["followables"] instance=ExtResource( 1 )]
-position = Vector2( -692, -177 )
+position = Vector2( -530, 251 )
 z_index = 2
+locked_in_place = false
 
 [node name="Level" type="Node" parent="."]
 
@@ -1026,12 +1032,27 @@ collision_layer = 32
 collision_mask = 32
 run_speed = 250
 
+[node name="Chasing_Outpost_Skelly" parent="Level/Enemies" instance=ExtResource( 5 )]
+visible = false
+position = Vector2( -323, 175 )
+aggressive_against_player = false
+
 [node name="Enteties" type="Node" parent="Level"]
 
 [node name="Guide" parent="Level/Enteties" instance=ExtResource( 7 )]
+disable_guide = true
 
 [node name="GuardIsa" parent="Level/Enteties" instance=ExtResource( 10 )]
 position = Vector2( -723, 519 )
+
+[node name="GuardGenericLeftGate" parent="Level/Enteties" instance=ExtResource( 11 )]
+position = Vector2( -546, 336 )
+default_direction = "standing_right"
+
+[node name="GuardGenericRightGate" parent="Level/Enteties" instance=ExtResource( 11 )]
+position = Vector2( -480, 338 )
+scale = Vector2( 1.00202, 1 )
+default_direction = "standing_left"
 
 [node name="Misc" type="Node" parent="Level"]
 
@@ -1039,6 +1060,15 @@ position = Vector2( -723, 519 )
 position = Vector2( -734, -113 )
 rotation = -2.29511
 texture = ExtResource( 8 )
+
+[node name="TriggerAreas" type="Node" parent="Level"]
+
+[node name="GuardsAtIntro" type="Area2D" parent="Level/TriggerAreas"]
+position = Vector2( -512, 233 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Level/TriggerAreas/GuardsAtIntro"]
+position = Vector2( 14, 72.75 )
+shape = SubResource( 44 )
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
@@ -1048,6 +1078,7 @@ margin_bottom = 36.0
 text = "Sundown Alpha 0.5 Dev-Test"
 
 [node name="ColorRect" type="ColorRect" parent="HUD"]
+visible = false
 margin_right = 1037.0
 margin_bottom = 615.0
 color = Color( 0, 0, 0, 1 )
@@ -1118,3 +1149,7 @@ loop = false
 [node name="IntroShowSkellyCam" type="Camera2D" parent="CameraPaths/IntroShowSkelly/Follow"]
 position = Vector2( 0.742012, -0.670387 )
 zoom = Vector2( 0.5, 0.5 )
+
+[connection signal="signal_other_guard" from="Level/Enteties/GuardGenericLeftGate" to="Level/Enteties/GuardGenericRightGate" method="_on_GuardGenericLeftGate_signal_other_guard"]
+[connection signal="area_entered" from="Level/TriggerAreas/GuardsAtIntro" to="Player" method="_on_GuardsAtIntro_area_entered"]
+[connection signal="area_entered" from="Level/TriggerAreas/GuardsAtIntro" to="Level/Enteties/GuardGenericLeftGate" method="_on_GuardsAtIntro_area_entered"]

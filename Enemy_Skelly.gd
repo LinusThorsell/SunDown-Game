@@ -1,5 +1,6 @@
 extends KinematicBody2D
 
+export var aggressive_against_player = true
 export var run_speed = 0
 var velocity = Vector2.ZERO
 var object_to_follow = null
@@ -97,3 +98,8 @@ func _on_DetectRadius_body_exited(body):
 		bodies_inside_radius.remove(bodies_inside_radius.find(body))
 	
 #	player = null
+
+
+func _on_GuardGenericLeftGate_start_player_saving_from_skelly():
+	print("chasing player")
+	pass # Replace with function body.

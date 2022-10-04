@@ -12,6 +12,8 @@ var last_location = -1
 var should_walk = false
 var speed = 150;
 
+export var disable_guide = false
+
 var interaction = -1
 
 var main_node
@@ -21,8 +23,8 @@ var player_force_follow_guide = false
 var player_offset_when_following = 40
 
 func push_start():
-	if (interaction == -1):
-		main_node.get_node("HUD/ColorRect/AnimationPlayer").play("Fade In")
+	main_node.get_node("HUD/ColorRect/AnimationPlayer").play("Fade In")
+	if (interaction == -1 and !disable_guide):
 		interaction = 0
 		should_walk = true
 

@@ -5,25 +5,32 @@ extends Node2D
 # var a = 2
 # var b = "text"
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	print("Starting: Intro cutscene")
-	$HUD/Consumables.hide()
-	$Player/ToolOverlay.hide()
-	
-	make_camera_follow_path(0.1699, $CameraPaths/Intro/Follow/IntroCam, $CameraPaths/Intro/Follow, 200)
-	
-	$HUD/ColorRect/AnimationPlayer.play("Fade In")
-	yield($HUD/ColorRect/AnimationPlayer, "animation_finished")
-	$HUD/ColorRect/AnimationPlayer.play("Fade Out")
-	yield($HUD/ColorRect/AnimationPlayer, "animation_finished")
-	#pass # Replace with function body.
+export var skip_cutscene = false;
 
+# camera stuff
 var should_camera_move = true
 var FollowCamera
 var PathToFollow
 var CameraSpeed
 var last_camera_location = -1
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	if (!skip_cutscene):
+		print("Starting: Intro cutscene")
+		$HUD/Consumables.hide()
+		$Player/ToolOverlay.hide()
+		
+		make_camera_follow_path(0.1699, $CameraPaths/Intro/Follow/IntroCam, $CameraPaths/Intro/Follow, 200)
+		
+		$HUD/ColorRect/AnimationPlayer.play("Fade In")
+		yield($HUD/ColorRect/AnimationPlayer, "animation_finished")
+		$HUD/ColorRect/AnimationPlayer.play("Fade Out")
+		yield($HUD/ColorRect/AnimationPlayer, "animation_finished")
+		#pass # Replace with function body.
+	else:
+		should_camera_move = false;
+		#$HUD/ColorRect/AnimationPlayer.play("Fade In")
 
 func make_camera_follow_path(delta, camera, path, speed):
 	if (delta == 0.1699): # hacky as duck but it works
@@ -39,10 +46,10 @@ func make_camera_follow_path(delta, camera, path, speed):
 		should_camera_move = false
 		FollowCamera.current = false
 		$Player/Camera2D.current = true
-		
+
 		$Level/Enteties/Guide.push_start()
 #		$Player.setPos(Vector2(-100, -100))
-		
+
 	if (should_camera_move):
 		last_camera_location = PathToFollow.get_offset()
 		PathToFollow.set_offset(PathToFollow.get_offset() + CameraSpeed * delta)
