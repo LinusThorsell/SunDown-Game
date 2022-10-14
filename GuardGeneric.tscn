@@ -109,3 +109,5 @@ animation = "walking_down"
 
 [node name="SpeechBubble" parent="." instance=ExtResource( 3 )]
 z_index = 8
+
+[node name="ConversationTimer" type="Timer" parent="."]

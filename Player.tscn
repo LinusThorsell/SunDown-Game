@@ -148,8 +148,8 @@ scale = Vector2( 0.7, 0.7 )
 frames = SubResource( 15 )
 animation = "candy"
 
-[node name="CollisionArea" type="Area2D" parent="."]
+[node name="PlayerCollision" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerCollision"]
 position = Vector2( 16, 18 )
 shape = SubResource( 16 )

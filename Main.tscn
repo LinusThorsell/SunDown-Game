@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=46 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Main.gd" type="Script" id=2]
@@ -15,6 +15,7 @@
 [ext_resource path="res://assets/MinimalPixel.ttf" type="DynamicFontData" id=14]
 [ext_resource path="res://assets/img/tools/bow.png" type="Texture" id=15]
 [ext_resource path="res://assets/img/tools/candy.png" type="Texture" id=16]
+[ext_resource path="res://NPCMoveEngine.tscn" type="PackedScene" id=17]
 
 [sub_resource type="TileSet" id=7]
 0/name = "Bush-LG"
@@ -898,6 +899,26 @@ points = PoolVector2Array( 0, 32, 32, 32, 32, 64, 0, 64 )
 0/shapes = [  ]
 0/z_index = 0
 
+[sub_resource type="Curve2D" id=46]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, -546, 338, 0, 0, 0, 0, -535, 311, 0, 0, 0, 0, -527, 294, 0, 0, 0, 0, -512, 282 )
+}
+
+[sub_resource type="Curve2D" id=47]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, -513, 282, 0, 0, 0, 0, -499, 303, 0, 0, 0, 0, -517, 357, 0, 0, 0, 0, -531, 455 )
+}
+
+[sub_resource type="Curve2D" id=48]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, -532, 454, 0, 0, 0, 0, -532, 380, 0, 0, 0, 0, -516, 327, 0, 0, 0, 0, -541, 277, 0, 0, 0, 0, -529, 233 )
+}
+
+[sub_resource type="Curve2D" id=45]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, -480, 341, 0, 0, 0, 0, -485, 282, 0, 0, 0, 0, -505, 235 )
+}
+
 [sub_resource type="RectangleShape2D" id=44]
 extents = Vector2( 67, 4.75 )
 
@@ -981,6 +1002,8 @@ _data = {
 script = ExtResource( 2 )
 skip_cutscene = true
 
+[node name="NPCMoveEngine" parent="." instance=ExtResource( 17 )]
+
 [node name="Player" parent="." groups=["followables"] instance=ExtResource( 1 )]
 position = Vector2( -530, 251 )
 z_index = 2
@@ -1047,12 +1070,52 @@ position = Vector2( -723, 519 )
 
 [node name="GuardGenericLeftGate" parent="Level/Enteties" instance=ExtResource( 11 )]
 position = Vector2( -546, 336 )
-default_direction = "standing_right"
+
+[node name="NPCMoveEngine" parent="Level/Enteties/GuardGenericLeftGate" instance=ExtResource( 17 )]
+
+[node name="City_CollectPlayer1" type="Path2D" parent="Level/Enteties/GuardGenericLeftGate"]
+position = Vector2( 546, -336 )
+curve = SubResource( 46 )
+
+[node name="Follow" type="PathFollow2D" parent="Level/Enteties/GuardGenericLeftGate/City_CollectPlayer1"]
+position = Vector2( -546, 338 )
+rotation = -1.18392
+loop = false
+
+[node name="City_CollectPlayer2" type="Path2D" parent="Level/Enteties/GuardGenericLeftGate"]
+position = Vector2( 546, -336 )
+curve = SubResource( 47 )
+
+[node name="Follow" type="PathFollow2D" parent="Level/Enteties/GuardGenericLeftGate/City_CollectPlayer2"]
+position = Vector2( -513, 282 )
+rotation = 0.982807
+loop = false
+
+[node name="City_CollectPlayer3" type="Path2D" parent="Level/Enteties/GuardGenericLeftGate"]
+position = Vector2( 546, -336 )
+curve = SubResource( 48 )
+
+[node name="Follow" type="PathFollow2D" parent="Level/Enteties/GuardGenericLeftGate/City_CollectPlayer3"]
+position = Vector2( -532, 454 )
+rotation = -1.5708
+loop = false
 
 [node name="GuardGenericRightGate" parent="Level/Enteties" instance=ExtResource( 11 )]
 position = Vector2( -480, 338 )
 scale = Vector2( 1.00202, 1 )
 default_direction = "standing_left"
+
+[node name="NPCMoveEngine" parent="Level/Enteties/GuardGenericRightGate" instance=ExtResource( 17 )]
+
+[node name="City_ProtectPlayer" type="Path2D" parent="Level/Enteties/GuardGenericRightGate"]
+position = Vector2( 479.032, -338 )
+scale = Vector2( 0.997984, 1 )
+curve = SubResource( 45 )
+
+[node name="Follow" type="PathFollow2D" parent="Level/Enteties/GuardGenericRightGate/City_ProtectPlayer"]
+position = Vector2( -480, 341 )
+rotation = -1.65536
+loop = false
 
 [node name="Misc" type="Node" parent="Level"]
 
@@ -1151,5 +1214,6 @@ position = Vector2( 0.742012, -0.670387 )
 zoom = Vector2( 0.5, 0.5 )
 
 [connection signal="signal_other_guard" from="Level/Enteties/GuardGenericLeftGate" to="Level/Enteties/GuardGenericRightGate" method="_on_GuardGenericLeftGate_signal_other_guard"]
+[connection signal="finished_moving" from="Level/Enteties/GuardGenericLeftGate/NPCMoveEngine" to="Level/Enteties/GuardGenericLeftGate" method="_on_NPCMoveEngine_finished_moving"]
 [connection signal="area_entered" from="Level/TriggerAreas/GuardsAtIntro" to="Player" method="_on_GuardsAtIntro_area_entered"]
 [connection signal="area_entered" from="Level/TriggerAreas/GuardsAtIntro" to="Level/Enteties/GuardGenericLeftGate" method="_on_GuardsAtIntro_area_entered"]
