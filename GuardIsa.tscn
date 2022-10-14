@@ -1,6 +1,7 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://assets/img/entety/guard_isa.png" type="Texture" id=1]
+[ext_resource path="res://SpeechBubble.tscn" type="PackedScene" id=2]
 
 [sub_resource type="AtlasTexture" id=44]
 atlas = ExtResource( 1 )
@@ -105,3 +106,6 @@ animation = "standing_down"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 2 )
 shape = SubResource( 57 )
+
+[node name="SpeechBubble" parent="." instance=ExtResource( 2 )]
+z_index = 100

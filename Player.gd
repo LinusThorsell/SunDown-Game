@@ -20,9 +20,12 @@ export var locked_in_place = true
 
 var selection = -1
 
-var arrows_left = 30
-var candy_left = 5
-var selected_tool = "Bow"
+var arrows_left = 0
+var candy_left = 0
+var selected_tool = "Candy"
+
+var has_bow = false
+var has_candy = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -106,13 +109,19 @@ func update_sprite(velocity, temp):
 			
 func handle_tools():
 	
+	if (!has_bow and !has_candy):
+		$ToolOverlay.hide()
+		get_tree().get_root().get_node("./Main/HUD/Consumables").hide()
+	else:
+		$ToolOverlay.show()
+		get_tree().get_root().get_node("./Main/HUD/Consumables").show()
 	# rotate overlayed tool
 	$ToolOverlay.look_at(get_global_mouse_position())
-	if (selected_tool == "Bow"):
+	if (selected_tool == "Bow" and has_bow):
 		get_parent().get_node("HUD/Consumables/SelectedTool").play("bow")
 		get_parent().get_node("HUD/Consumables/CurrentlyUsingName").text = "Bow <scroll>"
 		$ToolOverlay.play("bow")
-	elif (selected_tool == "Candy"):
+	elif (selected_tool == "Candy" and has_candy):
 		get_parent().get_node("HUD/Consumables/SelectedTool").play("candy")
 		get_parent().get_node("HUD/Consumables/CurrentlyUsingName").text = "Candy <scroll>"
 		$ToolOverlay.play("candy")

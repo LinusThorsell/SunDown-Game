@@ -6,6 +6,7 @@ export var default_direction = "standing_down"
 # var a = 2
 # var b = "text"
 signal signal_other_guard
+signal signal_isa
 
 var player_node
 var return_after_move = null;
@@ -55,9 +56,11 @@ func _on_GuardGenericLeftGate_signal_other_guard():
 func _on_NPCMoveEngine_finished_moving():
 	if (return_after_move == 1):
 		return_after_move = 2;
-		$NPCMoveEngine.move_node_along_path($".", $City_CollectPlayer2/Follow, 100)
+		$NPCMoveEngine.move_node_along_path($".", $City_CollectPlayer2/Follow, 100, true)
 	elif (return_after_move == 2):
 		return_after_move = 3;
 		$NPCMoveEngine.move_node_along_path($".", $City_CollectPlayer3/Follow, 150)
+	elif (return_after_move == 3):
+		emit_signal("signal_isa")
 		
 	#pass # Replace with function body.

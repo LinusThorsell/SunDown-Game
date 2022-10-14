@@ -11,6 +11,7 @@ var forceplayer = null;
 var path = null;
 var speed = null;
 var last_location = -1;
+var player
 
 signal finished_moving
 
@@ -33,6 +34,12 @@ func move_node_if_active(delta):
 		path.set_offset(path.get_offset() + speed * delta)
 		
 		target.position = path.position;
+		
+		var tmp_offset = path.get_offset()
+		if (forceplayer):
+			path.set_offset(path.get_offset() - 100 * delta)
+			player.position = path.position
+			path.set_offset(tmp_offset)
 	
 func move_node_along_path(target_node, follow_path, follow_speed, force_playerfollow=false):
 	print("walking: node, path, speed")
@@ -50,7 +57,8 @@ func move_node_along_path(target_node, follow_path, follow_speed, force_playerfo
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	player = get_tree().get_root().get_node("./Main/Player")
+#	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
