@@ -9,6 +9,7 @@ const CandyScene = preload("res://Candy.tscn")
 
 var player
 var return_after_move = 1
+#var return_after_move = 2
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

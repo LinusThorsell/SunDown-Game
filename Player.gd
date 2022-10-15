@@ -21,11 +21,11 @@ export var locked_in_place = true
 var selection = -1
 
 var arrows_left = 0
-var candy_left = 0
+var candy_left = 3
 var selected_tool = "Candy"
 
 var has_bow = false
-var has_candy = false
+var has_candy = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
