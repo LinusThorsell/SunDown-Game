@@ -155,9 +155,9 @@ func ask_player(question, options):
 	elif (options.size() == 2):
 		get_parent().get_node("HUD/SelectionBox/MainLabel").text = "Responding to: '" + question + "'\n[1] " + options[0] + "\n[2] " + options[1]
 	elif (options.size() == 3):
-		get_parent().get_node("HUD/SelectionBox/MainLabel").text = "Responding to: '" + question + "'\n[1] " + options[0] + "\n[2] " + options[1] + "\n[3]" + options[2]
+		get_parent().get_node("HUD/SelectionBox/MainLabel").text = "Responding to: '" + question + "'\n[1] " + options[0] + "\n[2] " + options[1] + "\n[3] " + options[2]
 	elif (options.size() == 4):
-		get_parent().get_node("HUD/SelectionBox/MainLabel").text = "Responding to: '" + question + "'\n[1] " + options[0] + "\n[2] " + options[1] + "\n[3]" + options[2] + "\n[4]" + options[3]
+		get_parent().get_node("HUD/SelectionBox/MainLabel").text = "Responding to: '" + question + "'\n[1] " + options[0] + "\n[2] " + options[1] + "\n[3] " + options[2] + "\n[4] " + options[3]
 	else:
 		print("Error in ask_player: question(" + question + ") options(" + options + ")")
 	lastwalk = "standing_down"

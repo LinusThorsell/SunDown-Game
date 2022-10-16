@@ -1,4 +1,4 @@
-[gd_scene load_steps=146 format=2]
+[gd_scene load_steps=181 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Main.gd" type="Script" id=2]
@@ -23,6 +23,13 @@
 [ext_resource path="res://ScientistMainFloor.gd" type="Script" id=21]
 [ext_resource path="res://ScientistAttic.gd" type="Script" id=22]
 [ext_resource path="res://ScientistMainFloor2.gd" type="Script" id=23]
+[ext_resource path="res://assets/img/entety/Scientists_reversed.png" type="Texture" id=24]
+[ext_resource path="res://assets/img/entety/Scientists.png" type="Texture" id=25]
+[ext_resource path="res://Scientist.gd" type="Script" id=26]
+[ext_resource path="res://SpeechBubble.tscn" type="PackedScene" id=27]
+[ext_resource path="res://CutsceneSpaceship.gd" type="Script" id=28]
+[ext_resource path="res://assets/img/backgrounds/spacecutscene.jpg" type="Texture" id=29]
+[ext_resource path="res://assets/img/backgrounds/note_mission.jpg" type="Texture" id=30]
 
 [sub_resource type="TileSet" id=7]
 0/name = "Bush-LG"
@@ -1973,9 +1980,6 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 32, 64, 32 )
 [sub_resource type="ConvexPolygonShape2D" id=108]
 points = PoolVector2Array( 32, 64, 0, 64, 0, 32, 32, 32 )
 
-[sub_resource type="ConvexPolygonShape2D" id=109]
-points = PoolVector2Array( 32, 64, 0, 64, 0, 0, 32, 0 )
-
 [sub_resource type="ConvexPolygonShape2D" id=110]
 points = PoolVector2Array( 32, 64, 0, 64, 0, 32, 32, 32 )
 
@@ -2541,16 +2545,9 @@ points = PoolVector2Array( 19.4873, 27.6625, 12.2535, 27.6625, 12.2535, 0, 19.48
 29/navigation_offset = Vector2( 0, 0 )
 29/shape_offset = Vector2( 0, 0 )
 29/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-29/shape = SubResource( 109 )
 29/shape_one_way = false
-29/shape_one_way_margin = 1.0
-29/shapes = [ {
-"autotile_coord": Vector2( 0, 0 ),
-"one_way": false,
-"one_way_margin": 1.0,
-"shape": SubResource( 109 ),
-"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
-} ]
+29/shape_one_way_margin = 0.0
+29/shapes = [  ]
 29/z_index = 0
 30/name = "[Base]BaseChip_pipo.png 30"
 30/texture = ExtResource( 3 )
@@ -3636,6 +3633,144 @@ _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, -480, 341, 0, 0, 0, 0, -485, 282, 0, 0, 0, 0, -505, 235 )
 }
 
+[sub_resource type="Curve2D" id=168]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 2831, 2945, 0, 0, 0, 0, 2833, 3001, 0, 0, 0, 0, 2840, 3062, 0, 0, 0, 0, 2850, 3119, 0, 0, 0, 0, 2875, 3160, 0, 0, 0, 0, 2901, 3187, 0, 0, 0, 0, 2944, 3199, 0, 0, 0, 0, 2971, 3207 )
+}
+
+[sub_resource type="Curve2D" id=169]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 2851, 2986, 0, 0, 0, 0, 2967, 3007, 0, 0, 0, 0, 3053, 3008, 0, 0, 0, 0, 3150, 2999, 0, 0, 0, 0, 3196, 2994, 0, 0, 0, 0, 3211, 2991 )
+}
+
+[sub_resource type="Curve2D" id=170]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 3207, 4071, 0, 0, 0, 0, 3142, 4071, 0, 0, 0, 0, 3076, 4070, 0, 0, 0, 0, 2995, 4073, 0, 0, 0, 0, 2931, 4082, 0, 0, 0, 0, 2853, 4092, 0, 0, 0, 0, 2789, 4099, 0, 0, 0, 0, 2741, 4103, 0, 0, 0, 0, 2702, 4097 )
+}
+
+[sub_resource type="CapsuleShape2D" id=167]
+radius = 5.29395
+height = 9.41211
+
+[sub_resource type="AtlasTexture" id=142]
+atlas = ExtResource( 24 )
+region = Rect2( 608, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=143]
+atlas = ExtResource( 24 )
+region = Rect2( 640, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=144]
+atlas = ExtResource( 24 )
+region = Rect2( 672, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=145]
+atlas = ExtResource( 24 )
+region = Rect2( 704, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=146]
+atlas = ExtResource( 25 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=147]
+atlas = ExtResource( 25 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=148]
+atlas = ExtResource( 25 )
+region = Rect2( 64, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=149]
+atlas = ExtResource( 25 )
+region = Rect2( 96, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=150]
+atlas = ExtResource( 24 )
+region = Rect2( 480, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=151]
+atlas = ExtResource( 24 )
+region = Rect2( 512, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=152]
+atlas = ExtResource( 24 )
+region = Rect2( 544, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=153]
+atlas = ExtResource( 24 )
+region = Rect2( 576, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=154]
+atlas = ExtResource( 24 )
+region = Rect2( 608, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=155]
+atlas = ExtResource( 24 )
+region = Rect2( 640, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=156]
+atlas = ExtResource( 24 )
+region = Rect2( 672, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=157]
+atlas = ExtResource( 24 )
+region = Rect2( 704, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=158]
+atlas = ExtResource( 25 )
+region = Rect2( 0, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=159]
+atlas = ExtResource( 25 )
+region = Rect2( 32, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=160]
+atlas = ExtResource( 25 )
+region = Rect2( 64, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=161]
+atlas = ExtResource( 25 )
+region = Rect2( 96, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=162]
+atlas = ExtResource( 25 )
+region = Rect2( 128, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=163]
+atlas = ExtResource( 25 )
+region = Rect2( 160, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=164]
+atlas = ExtResource( 25 )
+region = Rect2( 192, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=165]
+atlas = ExtResource( 25 )
+region = Rect2( 224, 32, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=166]
+animations = [ {
+"frames": [ SubResource( 142 ), SubResource( 143 ), SubResource( 144 ), SubResource( 145 ) ],
+"loop": true,
+"name": "standing_left",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 146 ), SubResource( 147 ), SubResource( 148 ), SubResource( 149 ) ],
+"loop": true,
+"name": "standing_right",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 150 ), SubResource( 151 ), SubResource( 152 ), SubResource( 153 ), SubResource( 154 ), SubResource( 155 ), SubResource( 156 ), SubResource( 157 ) ],
+"loop": true,
+"name": "walking_left",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 158 ), SubResource( 159 ), SubResource( 160 ), SubResource( 161 ), SubResource( 162 ), SubResource( 163 ), SubResource( 164 ), SubResource( 165 ) ],
+"loop": true,
+"name": "walking_right",
+"speed": 5.0
+} ]
+
 [sub_resource type="RectangleShape2D" id=44]
 extents = Vector2( 67, 4.75 )
 
@@ -3735,7 +3870,7 @@ skip_cutscene = true
 [node name="NPCMoveEngine" parent="." instance=ExtResource( 17 )]
 
 [node name="Player" parent="." groups=["followables"] instance=ExtResource( 1 )]
-position = Vector2( 3194, 2930 )
+position = Vector2( 319, 966 )
 z_index = 7
 locked_in_place = false
 
@@ -3933,6 +4068,63 @@ position = Vector2( -480, 341 )
 rotation = -1.65536
 loop = false
 
+[node name="Scientist" type="Area2D" parent="Level/Enteties"]
+position = Vector2( 2833, 2935 )
+scale = Vector2( 1.7, 1.70456 )
+z_index = 10
+script = ExtResource( 26 )
+
+[node name="NPCMoveEngine" parent="Level/Enteties/Scientist" instance=ExtResource( 17 )]
+
+[node name="Paths" type="Node" parent="Level/Enteties/Scientist"]
+
+[node name="GreetPlayer" type="Path2D" parent="Level/Enteties/Scientist/Paths"]
+z_index = 3
+curve = SubResource( 168 )
+
+[node name="Follow" type="PathFollow2D" parent="Level/Enteties/Scientist/Paths/GreetPlayer"]
+position = Vector2( 2831, 2945 )
+rotation = 1.53508
+loop = false
+
+[node name="GoToLaboratory" type="Path2D" parent="Level/Enteties/Scientist/Paths"]
+z_index = 4
+curve = SubResource( 169 )
+
+[node name="Follow" type="PathFollow2D" parent="Level/Enteties/Scientist/Paths/GoToLaboratory"]
+position = Vector2( 2851, 2986 )
+rotation = 0.179101
+loop = false
+
+[node name="Basement" type="Path2D" parent="Level/Enteties/Scientist/Paths"]
+z_index = 3
+curve = SubResource( 170 )
+
+[node name="Follow" type="PathFollow2D" parent="Level/Enteties/Scientist/Paths/Basement"]
+loop = false
+
+[node name="KinematicBody2D" type="KinematicBody2D" parent="Level/Enteties/Scientist"]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Level/Enteties/Scientist/KinematicBody2D"]
+position = Vector2( -0.587891, 5.88232 )
+z_index = 3
+shape = SubResource( 167 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Level/Enteties/Scientist"]
+position = Vector2( -0.588135, 5.88232 )
+z_index = 3
+shape = SubResource( 167 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Level/Enteties/Scientist"]
+z_index = 3
+frames = SubResource( 166 )
+animation = "standing_right"
+
+[node name="SpeechBubble" parent="Level/Enteties/Scientist" instance=ExtResource( 27 )]
+position = Vector2( 0, -12 )
+scale = Vector2( 0.1, 0.1 )
+z_index = 10
+
 [node name="Misc" type="Node" parent="Level"]
 
 [node name="CrashedShip" type="Sprite" parent="Level/Misc"]
@@ -3944,6 +4136,20 @@ texture = ExtResource( 8 )
 position = Vector2( -849, 583 )
 z_index = 4
 texture = ExtResource( 18 )
+
+[node name="Spacecutscene" type="Sprite" parent="Level/Misc"]
+position = Vector2( 207, -4404 )
+scale = Vector2( 3.37926, 3.38832 )
+texture = ExtResource( 29 )
+
+[node name="CutsceneSpaceship" type="Sprite" parent="Level/Misc"]
+position = Vector2( 1600, -4800 )
+rotation = 4.71239
+z_index = 4
+texture = ExtResource( 8 )
+script = ExtResource( 28 )
+
+[node name="Camera" type="Camera2D" parent="Level/Misc/CutsceneSpaceship"]
 
 [node name="TriggerAreas" type="Node" parent="Level"]
 
@@ -4004,10 +4210,9 @@ margin_bottom = 36.0
 text = "Sundown Alpha 0.5 Dev-Test"
 
 [node name="ColorRect" type="ColorRect" parent="HUD"]
-visible = false
 margin_right = 1037.0
 margin_bottom = 615.0
-color = Color( 0, 0, 0, 1 )
+color = Color( 0, 0, 0, 0 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/ColorRect"]
 "anims/Fade In" = SubResource( 10 )
@@ -4050,6 +4255,14 @@ animation = "candy"
 [node name="SelectionBox" parent="HUD" instance=ExtResource( 13 )]
 position = Vector2( 500, 350 )
 
+[node name="Notes" type="Node" parent="HUD"]
+
+[node name="NoteMission" type="Sprite" parent="HUD/Notes"]
+visible = false
+position = Vector2( 799, 296.695 )
+scale = Vector2( 0.540107, 0.540107 )
+texture = ExtResource( 30 )
+
 [node name="CameraPaths" type="Node" parent="."]
 
 [node name="Intro" type="Path2D" parent="CameraPaths"]
@@ -4080,10 +4293,15 @@ zoom = Vector2( 0.5, 0.5 )
 [connection signal="signal_isa" from="Level/Enteties/GuardGenericLeftGate" to="Level/Enteties/GuardIsa" method="_on_GuardGenericLeftGate_signal_isa"]
 [connection signal="signal_other_guard" from="Level/Enteties/GuardGenericLeftGate" to="Level/Enteties/GuardGenericRightGate" method="_on_GuardGenericLeftGate_signal_other_guard"]
 [connection signal="finished_moving" from="Level/Enteties/GuardGenericLeftGate/NPCMoveEngine" to="Level/Enteties/GuardGenericLeftGate" method="_on_NPCMoveEngine_finished_moving"]
+[connection signal="cutscene_spacefly" from="Level/Enteties/Scientist" to="Level/Misc/CutsceneSpaceship" method="_on_Scientist_cutscene_spacefly"]
+[connection signal="finished_moving" from="Level/Enteties/Scientist/NPCMoveEngine" to="Level/Enteties/Scientist" method="_on_NPCMoveEngine_finished_moving"]
+[connection signal="finished" from="Level/Misc/CutsceneSpaceship" to="Level/Enteties/Scientist" method="_on_CutsceneSpaceship_finished"]
 [connection signal="area_entered" from="Level/TriggerAreas/GuardsAtIntro" to="Player" method="_on_GuardsAtIntro_area_entered"]
 [connection signal="area_entered" from="Level/TriggerAreas/GuardsAtIntro" to="Level/Enteties/GuardGenericLeftGate" method="_on_GuardsAtIntro_area_entered"]
 [connection signal="area_entered" from="Level/TriggerAreas/ScientistsDoor" to="Level/TriggerAreas/ScientistsDoor" method="_on_ScientistsDoor_area_entered"]
+[connection signal="trigger_scientist" from="Level/TriggerAreas/ScientistsDoor" to="Level/Enteties/Scientist" method="_on_ScientistsDoor_trigger_scientist"]
 [connection signal="area_entered" from="Level/TriggerAreas/ScientistBasement" to="Level/TriggerAreas/ScientistBasement" method="_on_ScientistBasement_area_entered"]
+[connection signal="trigger_scientist_basement" from="Level/TriggerAreas/ScientistBasement" to="Level/Enteties/Scientist" method="_on_ScientistBasement_trigger_scientist_basement"]
 [connection signal="area_entered" from="Level/TriggerAreas/ScientistMainFloor" to="Level/TriggerAreas/ScientistMainFloor" method="_on_ScientistMainFloor_area_entered"]
 [connection signal="area_entered" from="Level/TriggerAreas/ScientistAttic" to="Level/TriggerAreas/ScientistAttic" method="_on_ScientistAttic_area_entered"]
 [connection signal="area_entered" from="Level/TriggerAreas/ScientistMainFloor2" to="Level/TriggerAreas/ScientistMainFloor2" method="_on_ScientistMainFloor2_area_entered"]

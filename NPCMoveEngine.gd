@@ -33,7 +33,7 @@ func move_node_if_active(delta):
 		last_location = path.get_offset()
 		path.set_offset(path.get_offset() + speed * delta)
 		
-		target.position = path.position;
+		target.global_position = path.global_position;
 		
 		var tmp_offset = path.get_offset()
 		if (forceplayer):
