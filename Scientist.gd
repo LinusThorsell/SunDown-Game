@@ -7,7 +7,7 @@ extends Area2D
 
 signal cutscene_spacefly
 
-var triggerstate = 7
+var triggerstate = 0
 var player
 
 var next_position
@@ -45,7 +45,7 @@ func _on_ScientistsDoor_trigger_scientist():
 	if (triggerstate == 0):
 		print("triggering first interaction with scientist")
 		triggerstate = 1
-#		$NPCMoveEngine.move_node_along_path($".", $Paths/GreetPlayer/Follow, 150)
+		$NPCMoveEngine.move_node_along_path($".", $Paths/GreetPlayer/Follow, 150)
 #	pass # Replace with function body.
 
 
@@ -147,25 +147,25 @@ func _on_NPCMoveEngine_finished_moving():
 		$NPCMoveEngine.move_node_along_path($".", $Paths/Basement/Follow, 100)
 		
 	elif(triggerstate == 5):
-#		print("static mode on")
-#		$SpeechBubble.set_text("This is my laboratiory!", 4)
-#		yield(get_tree().create_timer(3),"timeout")
-#		$SpeechBubble.set_text("I'm guessing this will be our basecamp for a while..", 4)
-#		yield(get_tree().create_timer(3),"timeout")
-#		$SpeechBubble.set_text(".. so you better get comfortable quickly!", 4)
-#		yield(get_tree().create_timer(3),"timeout")
-#
-#		$SpeechBubble.set_text("Ready to get started saving this planet?", 4)
-#		yield(get_tree().create_timer(3),"timeout")
-#
-#		answer = yield(player.ask_player("Ready to get started saving this planet?", ["Yes! How do we get started?"]), "completed")
-#
-#		$SpeechBubble.set_text("Alright! First on the list is to find my keys for the teleporter ...", 4)
-#		yield(get_tree().create_timer(3),"timeout")
-#		$SpeechBubble.set_text("You will know that I am very bad at keeping my stuff in order in some time..", 4)
-#		yield(get_tree().create_timer(3),"timeout")
-#		$SpeechBubble.set_text(".. this time I am sure the key is somewhere in my house though. So good luck!", 4)
-#		yield(get_tree().create_timer(3),"timeout")
+		print("static mode on")
+		$SpeechBubble.set_text("This is my laboratiory!", 4)
+		yield(get_tree().create_timer(3),"timeout")
+		$SpeechBubble.set_text("I'm guessing this will be our basecamp for a while..", 4)
+		yield(get_tree().create_timer(3),"timeout")
+		$SpeechBubble.set_text(".. so you better get comfortable quickly!", 4)
+		yield(get_tree().create_timer(3),"timeout")
+
+		$SpeechBubble.set_text("Ready to get started saving this planet?", 4)
+		yield(get_tree().create_timer(3),"timeout")
+
+		answer = yield(player.ask_player("Ready to get started saving this planet?", ["Yes! How do we get started?"]), "completed")
+
+		$SpeechBubble.set_text("Alright! First on the list is to find my keys for the teleporter ...", 4)
+		yield(get_tree().create_timer(3),"timeout")
+		$SpeechBubble.set_text("You will know that I am very bad at keeping my stuff in order in some time..", 4)
+		yield(get_tree().create_timer(3),"timeout")
+		$SpeechBubble.set_text(".. this time I am sure the key is somewhere in my house though. So good luck!", 4)
+		yield(get_tree().create_timer(3),"timeout")
 
 		CurrentObjective.bbcode_text = "[color=#000000]Current Objective: Find Scientist keys in the house.[/color]"
 		CurrentObjectiveBG.show()
@@ -183,26 +183,26 @@ func _on_NPCMoveEngine_finished_moving():
 		
 		CurrentObjective.hide()
 		CurrentObjectiveBG.hide()
-#		$SpeechBubble.set_text("Great job! Now, lets get started for real.", 4)
-#		yield(get_tree().create_timer(3),"timeout")
-#		$SpeechBubble.set_text("I am almost out of red apples for cotton candy cooking ...", 4)
-#		yield(get_tree().create_timer(3),"timeout")
-#		$SpeechBubble.set_text("Jump into the portal over there and get me some more will you?", 4)
-#		yield(get_tree().create_timer(3),"timeout")
-#
-#		yield(player.ask_player("Jump into the portal over there and get me some more will you?", ["Sure."]), "completed")
-#
-#		$SpeechBubble.set_text("Luckily it is very easy to use, I will enter the coordinates..", 4)
-#		yield(get_tree().create_timer(3),"timeout")
-#		$SpeechBubble.set_text(".. so you just have to step on the center pad and you will teleport.", 4)
-#		yield(get_tree().create_timer(3),"timeout")
-#		$SpeechBubble.set_text("Oh! and I almost forgot. Here, have some cotton candy..", 4)
-#		yield(get_tree().create_timer(3),"timeout")
-#		player.candy_left += 5
-#		$SpeechBubble.set_text(".. you never know when you will run into those skellies!", 4)
-#		yield(get_tree().create_timer(3),"timeout")
-#		$SpeechBubble.set_text("Best of luck!", 4)
-#		yield(get_tree().create_timer(3),"timeout")
+		$SpeechBubble.set_text("Great job! Now, lets get started for real.", 4)
+		yield(get_tree().create_timer(3),"timeout")
+		$SpeechBubble.set_text("I am almost out of red apples for cotton candy cooking ...", 4)
+		yield(get_tree().create_timer(3),"timeout")
+		$SpeechBubble.set_text("Jump into the portal over there and get me some more will you?", 4)
+		yield(get_tree().create_timer(3),"timeout")
+
+		yield(player.ask_player("Jump into the portal over there and get me some more will you?", ["Sure."]), "completed")
+
+		$SpeechBubble.set_text("Luckily it is very easy to use, I will enter the coordinates..", 4)
+		yield(get_tree().create_timer(3),"timeout")
+		$SpeechBubble.set_text(".. so you just have to step on the center pad and you will teleport.", 4)
+		yield(get_tree().create_timer(3),"timeout")
+		$SpeechBubble.set_text("Oh! and I almost forgot. Here, have some cotton candy..", 4)
+		yield(get_tree().create_timer(3),"timeout")
+		player.candy_left += 5
+		$SpeechBubble.set_text(".. you never know when you will run into those skellies!", 4)
+		yield(get_tree().create_timer(3),"timeout")
+		$SpeechBubble.set_text("Best of luck!", 4)
+		yield(get_tree().create_timer(3),"timeout")
 		
 		triggerstate = 8
 		
@@ -225,23 +225,23 @@ func _on_NPCMoveEngine_finished_moving():
 		yield(get_tree().create_timer(3),"timeout")
 		$SpeechBubble.set_text("..lets continue saving the planet!", 4)
 		yield(get_tree().create_timer(3),"timeout")
-		
+
 		$SpeechBubble.set_text("Will you show me that note again?", 4)
 		yield(get_tree().create_timer(3),"timeout")
 
 		yield(player.ask_player("Will you show me that note again?", ["Hand over note"]), "completed")
-		
+
 		get_tree().get_root().get_node("./Main/HUD/Notes/NoteMission").show()
 
 		$SpeechBubble.set_text("hmmmmmm . . . . . . . .", 6)
 		yield(get_tree().create_timer(8),"timeout")
 
 		get_tree().get_root().get_node("./Main/HUD/Notes/NoteMission").hide()
-		
+
 		$SpeechBubble.set_text("Alright, so do you think your spaceship should be repairable?", 5)
 		yield(get_tree().create_timer(4),"timeout")
 		answer = yield(player.ask_player("Alright, so do you think your spaceship should be repairable?", ["I cannot remember", "Maybe, but it will take some work", "Sure"]), "completed")
-		
+
 		if (answer == 0): # I cannot remember
 			$SpeechBubble.set_text("Oh yeah, I forgot that you must have been..", 4)
 			yield(get_tree().create_timer(3),"timeout")
@@ -259,18 +259,19 @@ func _on_NPCMoveEngine_finished_moving():
 		else:
 			$SpeechBubble.set_text("Alright, then we will likely be able to repair it!", 4)
 			yield(get_tree().create_timer(3),"timeout")
-		
+
 		$SpeechBubble.set_text("I will go and have a look at the spaceship then.", 4)
 		yield(get_tree().create_timer(3),"timeout")
 		$SpeechBubble.set_text("While I am away, will you look if you can find the hydrogen..", 4)
 		yield(get_tree().create_timer(3),"timeout")
 		$SpeechBubble.set_text(".. cannisters that you ditched before you went for the emergency landing?", 4)
 		yield(get_tree().create_timer(3),"timeout")
-		
+
 		answer = yield(player.ask_player(".. cannisters that you ditched before you went for the emergency landing?", ["Sure", "Sure, but where?"]), "completed")
 		
 		$SpeechBubble.set_text("I think they must have landed east of here...", 4)
 		yield(get_tree().create_timer(3),"timeout")
+		teleporter_coordinates = Vector2(7230, -1845)
 		$SpeechBubble.set_text("I'm setting some coordinates to the east woods.", 4)
 		yield(get_tree().create_timer(3),"timeout")
 		$SpeechBubble.set_text("Good luck!", 4)
@@ -280,6 +281,9 @@ func _on_NPCMoveEngine_finished_moving():
 		CurrentObjectiveBG.show()
 		CurrentObjective.show()
 		
+	elif(triggerstate == 9):
+		print("got hydrogen cannister")
+
 func _on_CutsceneSpaceship_finished():
 	_on_NPCMoveEngine_finished_moving() # very illegal ikik
 	
@@ -319,7 +323,7 @@ func _on_Teleporter_area_entered(area):
 			print("tp player")
 			CurrentObjective.bbcode_text = "[color=#000000]Current Objective: Collect " + str(CurrentObjectiveFinished) + " more apples for cotton candy cooking.[/color]"
 		elif (triggerstate == 9):
-			CurrentObjective.bbcode_text = "[color=#000000]Find the hydrogen canister in the woods.[/color]"
+			CurrentObjective.bbcode_text = "[color=#000000]Current Objective: Find the hydrogen canister in the woods.[/color]"
 		
 		player.position = teleporter_coordinates
 #	pass # Replace with function body.
@@ -333,3 +337,14 @@ func collect_apple():
 			CurrentObjective.bbcode_text = "[color=#000000]Current Objective: Bring the apples back to the scientist.[/color]"
 	elif (triggerstate == 8 and CurrentObjectiveFinished == 0):
 		CurrentObjective.bbcode_text = "[color=#000000]Current Objective: Bring the apples back to the scientist.[/color]"
+
+func _on_EastWoodsArea_area_entered(area):
+	player.position = Vector2(3080, 4210)
+#	pass # Replace with function body.
+
+
+func _on_HydrogenCanister_area_entered(area):
+	if (area.name == "PlayerCollision" and CurrentObjectiveFinished == 1):
+		CurrentObjectiveFinished = 0
+		CurrentObjective.bbcode_text = "[color=#000000]Current Objective: Bring the hydrogen canister back to the scientist.[/color]"
+#	pass # Replace with function body.

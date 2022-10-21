@@ -10,12 +10,15 @@ signal signal_isa
 
 var player_node
 var return_after_move = null;
+var cutsceneskelly
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$AnimatedSprite.play(default_direction)
 	player_node = get_parent().get_parent().get_parent().get_node("Player")
-	pass # Replace with function body.
+	cutsceneskelly = get_parent().get_parent().get_node("Enemies/GuardCutsceneSkelly")
+#	print(cutsceneskelly)
+#	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -46,11 +49,14 @@ func _on_GuardGenericLeftGate_signal_other_guard():
 	$SpeechBubble.set_text("You are deffo a skelly arent you...", 5)
 	yield(get_tree().create_timer(5.0),"timeout")
 	
-	yield(get_tree().create_timer(3),"timeout")
+	yield(get_tree().create_timer(2.3),"timeout")
+	cutsceneskelly.aggressive_against_player = true
 	$SpeechBubble.set_text("HEY WATCH OUT!!!", 2)
+	yield(get_tree().create_timer(0.7),"timeout")
 	
 	$NPCMoveEngine.move_node_along_path($".", $City_ProtectPlayer/Follow, 150);
-	#pass # Replace with function body.
+	cutsceneskelly.aggressive_against_player = false
+	#pass # Replace with function b
 
 
 func _on_NPCMoveEngine_finished_moving():

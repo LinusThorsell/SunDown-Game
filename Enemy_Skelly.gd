@@ -31,7 +31,7 @@ func walk_to_player():
 	object_to_follow = null
 	velocity = Vector2.ZERO
 	
-	if (bodies_inside_radius.size() > 0):
+	if (bodies_inside_radius.size() > 0 and aggressive_against_player):
 #		print("Array is non-zero, find suitable target to follow: " + str(bodies_inside_radius))
 		for i in range(0, bodies_inside_radius.size()):
 			if (bodies_inside_radius[i].is_in_group("distractions")):
