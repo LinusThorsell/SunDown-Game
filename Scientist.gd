@@ -6,9 +6,12 @@ extends Area2D
 # var b = "text"
 
 signal cutscene_spacefly
+signal spaceship_end
 
 var triggerstate = 0
 var player
+
+var RunwayArea
 
 var next_position
 var force_update_position = false
@@ -27,8 +30,9 @@ func _ready():
 	player = get_tree().get_root().get_node("./Main/Player")
 	CurrentObjective = get_tree().get_root().get_node("./Main/HUD/Foreground/CurrentObjective")
 	CurrentObjectiveBG = get_tree().get_root().get_node("./Main/HUD/Background/CurrentObjectiveBG")
+	RunwayArea = get_tree().get_root().get_node("./Main/Level/TriggerAreas/SkeletonsOnRunway")
 	
-	_on_NPCMoveEngine_finished_moving() # debug
+#	_on_NPCMoveEngine_finished_moving() # debug
 #	pass # Replace with function body.
 
 
@@ -50,6 +54,9 @@ func _on_ScientistsDoor_trigger_scientist():
 
 
 func _on_NPCMoveEngine_finished_moving():
+	
+	player.health = 100
+	
 	if (triggerstate == 1):
 		$SpeechBubble.set_text("Who are you?!?! Lizard folk?!", 3)
 		yield(get_tree().create_timer(3),"timeout")
@@ -143,12 +150,12 @@ func _on_NPCMoveEngine_finished_moving():
 	elif(triggerstate == 4):
 		print("triggered scientist basement")
 		triggerstate = 5
-		$SpeechBubble.set_text("Come here. I need to show you something", 4)
+		$SpeechBubble.set_text("Follow me!", 4)
 		$NPCMoveEngine.move_node_along_path($".", $Paths/Basement/Follow, 100)
 		
 	elif(triggerstate == 5):
 		print("static mode on")
-		$SpeechBubble.set_text("This is my laboratiory!", 4)
+		$SpeechBubble.set_text("This is my laboratory!", 4)
 		yield(get_tree().create_timer(3),"timeout")
 		$SpeechBubble.set_text("I'm guessing this will be our basecamp for a while..", 4)
 		yield(get_tree().create_timer(3),"timeout")
@@ -179,7 +186,7 @@ func _on_NPCMoveEngine_finished_moving():
 	
 	elif(triggerstate == 7):
 		
-		CurrentObjectiveFinished = 1
+		CurrentObjectiveFinished = 10
 		
 		CurrentObjective.hide()
 		CurrentObjectiveBG.hide()
@@ -205,6 +212,7 @@ func _on_NPCMoveEngine_finished_moving():
 		yield(get_tree().create_timer(3),"timeout")
 		
 		triggerstate = 8
+		player.respawn_location = Vector2(3560, -2115)
 		
 		CurrentObjective.bbcode_text = "[color=#000000]Current Objective: Go into the teleporter portal to the right in the scientists basement.[/color]"
 		CurrentObjectiveBG.show()
@@ -272,6 +280,7 @@ func _on_NPCMoveEngine_finished_moving():
 		$SpeechBubble.set_text("I think they must have landed east of here...", 4)
 		yield(get_tree().create_timer(3),"timeout")
 		teleporter_coordinates = Vector2(7230, -1845)
+		player.respawn_location = Vector2(7230, -1845)
 		$SpeechBubble.set_text("I'm setting some coordinates to the east woods.", 4)
 		yield(get_tree().create_timer(3),"timeout")
 		$SpeechBubble.set_text("Good luck!", 4)
@@ -282,10 +291,94 @@ func _on_NPCMoveEngine_finished_moving():
 		CurrentObjective.show()
 		
 	elif(triggerstate == 9):
+		triggerstate = 10
+		CurrentObjectiveFinished = 2
 		print("got hydrogen cannister")
-
+		$SpeechBubble.set_text("Great job Player! It looks kind of damaged but it will do!", 4)
+		yield(get_tree().create_timer(3),"timeout")
+		$SpeechBubble.set_text("I managed to find your ship and fix it enough for it to fly", 4)
+		yield(get_tree().create_timer(3),"timeout")
+		$SpeechBubble.set_text("I got it transported to the airstrip in the soutern flats ..", 4)
+		yield(get_tree().create_timer(3),"timeout")
+		$SpeechBubble.set_text(".. will you go and fill the hydrogen fuel storage with ..", 4)
+		yield(get_tree().create_timer(3),"timeout")
+		$SpeechBubble.set_text(".. the canister you collected?", 4)
+		yield(get_tree().create_timer(3),"timeout")
+		
+		answer = yield(player.ask_player("will you go and fill the hydrogen fuel storage with the canister you collected?", ["Sure"]), "completed")
+		
+		teleporter_coordinates = Vector2(7000, -55)
+		player.respawn_location = Vector2(7000, -55)
+		$SpeechBubble.set_text("I'm setting the coordinates to the soutern flats now...", 4)
+		yield(get_tree().create_timer(3),"timeout")
+		$SpeechBubble.set_text("Also, have some candy in case there are any skellies left.", 4)
+		yield(get_tree().create_timer(3),"timeout")
+		player.candy_left += 15
+		player.has_candy = true
+		
+		CurrentObjective.bbcode_text = "[color=#000000]Current Objective: Enter the scientists teleporter.[/color]"
+		CurrentObjectiveBG.show()
+		CurrentObjective.show()
+	
+	elif(triggerstate == 10):
+		triggerstate = 11
+		
+		$SpeechBubble.set_text("Hey Player!", 4)
+		yield(get_tree().create_timer(3),"timeout")
+		$SpeechBubble.set_text("Seems like there are a lot of skellies blocking the runway", 4)
+		yield(get_tree().create_timer(3),"timeout")
+		$SpeechBubble.set_text("Can you lure them out of the way?", 4)
+		yield(get_tree().create_timer(3),"timeout")
+		
+		answer = yield(player.ask_player("Can you lure them out of the way?", ["Sure"]), "completed")
+		player.locked_in_place = false
+			
+		$SpeechBubble.set_text("Great! Come back to me if you need more candy!", 4)
+		yield(get_tree().create_timer(3),"timeout")
+		
+		CurrentObjective.bbcode_text = "[color=#000000]Current Objective: Lure the skeletons off the runway. (" + str(RunwayArea.skelliesonrunway.size()) + " left)[/color]"
+		CurrentObjectiveBG.show()
+		CurrentObjective.show()
+	
+	elif(triggerstate == 11):
+		print("Ready to flyyyyy")
+		
+		triggerstate = 12
+		
+		CurrentObjectiveBG.hide()
+		CurrentObjective.hide()
+		player.has_candy = false
+		
+		$SpeechBubble.set_text("Great job! Ready to fly again?", 4)
+		yield(get_tree().create_timer(3),"timeout")
+		
+		answer = yield(player.ask_player("Ready to fly again?", ["Of course!", "No thank you."]), "completed")
+		if (answer == 1):
+			$SpeechBubble.set_text("Well I cannot fly so you have no choice!", 4)
+			yield(get_tree().create_timer(3),"timeout")
+		
+		$SpeechBubble.set_text("Hop into the spaceship when you are ready!", 4)
+		yield(get_tree().create_timer(3),"timeout")
+		
+	elif(triggerstate == 12):
+		triggerstate = 13
+		print("fly animation play")
+		var animationplayer = get_tree().get_root().get_node("./Main/HUD/ColorRect/AnimationPlayer")
+		var ship = get_tree().get_root().get_node("./Main/Level/Misc/FlyableSpaceship")
+		animationplayer.play("Fade Out")
+		yield(get_tree().create_timer(1),"timeout")
+		
+		player.locked_in_place = true
+		player.hide()
+		$".".hide()
+		
+		emit_signal("spaceship_end")
+		print("emitting signal")
+		animationplayer.play("Fade In")
+		
+		
 func _on_CutsceneSpaceship_finished():
-	_on_NPCMoveEngine_finished_moving() # very illegal ikik
+	_on_NPCMoveEngine_finished_moving() # very illegal
 	
 #	pass # Replace with function body.
 
@@ -308,6 +401,11 @@ func _on_TriggerScientist_area_entered(area):
 	print("triggeringscientist")
 	if (CurrentObjectiveFinished == 0):
 		_on_NPCMoveEngine_finished_moving()
+		
+	if (CurrentObjectiveFinished == 1 and triggerstate == 11 and player.candy_left <= 5):
+		$SpeechBubble.set_text("Here, have some more candy!", 4)
+		yield(get_tree().create_timer(3),"timeout")
+		player.candy_left += 15
 #	pass # Replace with function body.
 
 
@@ -324,6 +422,8 @@ func _on_Teleporter_area_entered(area):
 			CurrentObjective.bbcode_text = "[color=#000000]Current Objective: Collect " + str(CurrentObjectiveFinished) + " more apples for cotton candy cooking.[/color]"
 		elif (triggerstate == 9):
 			CurrentObjective.bbcode_text = "[color=#000000]Current Objective: Find the hydrogen canister in the woods.[/color]"
+		elif (triggerstate == 10):
+			CurrentObjective.bbcode_text = "[color=#000000]Current Objective: Fill the hydrogen fuel storage with the hydrogen canister[/color]"
 		
 		player.position = teleporter_coordinates
 #	pass # Replace with function body.
@@ -348,3 +448,35 @@ func _on_HydrogenCanister_area_entered(area):
 		CurrentObjectiveFinished = 0
 		CurrentObjective.bbcode_text = "[color=#000000]Current Objective: Bring the hydrogen canister back to the scientist.[/color]"
 #	pass # Replace with function body.
+
+var filled_up = false
+func _on_Fillup_area_entered(area):
+	if (area.name == "PlayerCollision" and !filled_up):
+		filled_up = true
+		CurrentObjectiveFinished = 1
+		player.locked_in_place = true
+		CurrentObjectiveBG.hide()
+		CurrentObjective.hide()
+		$NPCMoveEngine.move_node_along_path($".", $Paths/Airstrip/Follow, 100)
+#		CurrentObjective.bbcode_text = "[color=#000000]Current Objective: Clear all the skellies off the runway (if you run out of candy go back to the scientist)[/color]"
+#	pass # Replace with function body.
+
+
+func _on_SkeletonsOnRunway_change_in_runwayskelly_count():
+	if (triggerstate == 11):
+		print(RunwayArea.skelliesonrunway.size())
+		CurrentObjectiveFinished = RunwayArea.skelliesonrunway.size()
+		CurrentObjective.bbcode_text = "[color=#000000]Current Objective: Lure the skeletons off the runway. (" + str(CurrentObjectiveFinished) + " left)[/color]"
+		
+		# DEBUG TODO REMOVE
+#		CurrentObjectiveFinished = 0
+		
+		if (CurrentObjectiveFinished == 0):
+			CurrentObjective.bbcode_text = "[color=#000000]Current Objective: Head back to the scientist in the hangar.[/color]"
+#	pass # Replace with function body.
+
+var signalled = false
+func _on_FlyableSpaceship_signal_scientist():
+	if (triggerstate == 12 and !signalled):
+		signalled = true
+		_on_NPCMoveEngine_finished_moving()

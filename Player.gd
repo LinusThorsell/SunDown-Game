@@ -18,6 +18,8 @@ var health = 100
 
 export var locked_in_place = true
 
+var respawn_location = Vector2(-555, 780) # first place you can actually die, under city
+
 var selection = -1
 
 var arrows_left = 0
@@ -38,6 +40,7 @@ func _ready():
 func setPos(vector):
 	position = vector
 
+var following_npc = false
 func handle_movement():
 	# moving code
 	if (!locked_in_place):
@@ -75,8 +78,8 @@ func handle_movement():
 		velocity = velocity.normalized() * player_speed
 		
 		move_and_slide(velocity)
-	else:
-		$AnimatedSprite.play(lastwalk)
+	elif (!following_npc):
+		$AnimatedSprite.play("standing_down")
 		
 func update_sprite(velocity, temp):
 	lastwalk = temp
@@ -113,27 +116,27 @@ func handle_tools():
 		$ToolOverlay.hide()
 		get_tree().get_root().get_node("./Main/HUD/Consumables").hide()
 	else:
-		$ToolOverlay.show()
+		$ToolOverlay.hide() # removing
 		get_tree().get_root().get_node("./Main/HUD/Consumables").show()
 	# rotate overlayed tool
-	$ToolOverlay.look_at(get_global_mouse_position())
-	if (selected_tool == "Bow" and has_bow):
-		get_parent().get_node("HUD/Consumables/SelectedTool").play("bow")
-		get_parent().get_node("HUD/Consumables/CurrentlyUsingName").text = "Bow <scroll>"
-		$ToolOverlay.play("bow")
-	elif (selected_tool == "Candy" and has_candy):
-		get_parent().get_node("HUD/Consumables/SelectedTool").play("candy")
-		get_parent().get_node("HUD/Consumables/CurrentlyUsingName").text = "Candy <scroll>"
+#	$ToolOverlay.look_at(get_global_mouse_position())
+#	if (selected_tool == "Bow" and has_bow):
+#		get_parent().get_node("HUD/Consumables/SelectedTool").play("bow")
+#		get_parent().get_node("HUD/Consumables/CurrentlyUsingName").text = "Bow <scroll>"
+#		$ToolOverlay.play("bow")
+	if (selected_tool == "Candy" and has_candy):
+#		get_parent().get_node("HUD/Consumables/SelectedTool").play("candy")
+#		get_parent().get_node("HUD/Consumables/CurrentlyUsingName").text = "Candy <scroll>"
 		$ToolOverlay.play("candy")
 #	$ToolOverlay.rotation_degrees -= 180
 	
-	if (Input.is_action_just_pressed("mouse_left") and !locked_in_place and selected_tool == "Bow" and arrows_left > 0):
-#		print(get_viewport().get_mouse_position())
-		var EntetieScene = get_parent().find_node("Enteties")
-		var ArrowInstance = ArrowScene.instance()
-		EntetieScene.add_child(ArrowInstance)
-		ArrowInstance.fire(get_global_mouse_position(), position)
-		arrows_left -= 1
+#	if (Input.is_action_just_pressed("mouse_left") and !locked_in_place and selected_tool == "Bow" and arrows_left > 0):
+##		print(get_viewport().get_mouse_position())
+#		var EntetieScene = get_parent().find_node("Enteties")
+#		var ArrowInstance = ArrowScene.instance()
+#		EntetieScene.add_child(ArrowInstance)
+#		ArrowInstance.fire(get_global_mouse_position(), position)
+#		arrows_left -= 1
 	if (Input.is_action_just_pressed("mouse_left") and !locked_in_place and selected_tool == "Candy" and candy_left > 0):
 #		print(get_viewport().get_mouse_position())
 		var EntetieScene = get_parent().find_node("Enteties")
@@ -143,10 +146,16 @@ func handle_tools():
 		candy_left -= 1
 		
 		
-	get_parent().get_node("HUD/Consumables/Remaining").text = "Arrows Left: " + str(arrows_left) + "\n" + "Candy Left: " + str(candy_left);
+	get_parent().get_node("HUD/Consumables/Remaining").text = "Candy Left: " + str(candy_left);
 
 func update_health():
 	healthbar.update_healthbar(health)
+	if health <= 0:
+		print("ded, respawning at latest location")
+		position = respawn_location
+		health = 100
+		if candy_left < 5:
+			candy_left = 5
 	
 func ask_player(question, options):
 	get_parent().get_node("HUD/SelectionBox").show()

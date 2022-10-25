@@ -20,7 +20,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	position.x = position.x-(150*delta)
+	if (moving):
+		position.x = position.x-(150*delta)
 #	pass
 
 
@@ -32,7 +33,7 @@ func _on_Scientist_cutscene_spacefly():
 	
 	camera.current = true
 	moving = true
-	yield(get_tree().create_timer(3),"timeout")
+	yield(get_tree().create_timer(4),"timeout")
 	moving = false
 	camera.current = false
 	

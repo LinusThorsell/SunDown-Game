@@ -8,7 +8,7 @@ extends Node2D
 export var skip_cutscene = false;
 
 # camera stuff
-var should_camera_move = true
+var should_camera_move = false
 var FollowCamera
 var PathToFollow
 var CameraSpeed
@@ -20,6 +20,9 @@ func _ready():
 		print("Starting: Intro cutscene")
 		$HUD/Consumables.hide()
 		$Player/ToolOverlay.hide()
+		
+		yield(get_tree().create_timer(10.0),"timeout")
+		$HUD/Foreground/StartText.hide()
 		
 		make_camera_follow_path(0.1699, $CameraPaths/Intro/Follow/IntroCam, $CameraPaths/Intro/Follow, 200)
 		
@@ -41,14 +44,15 @@ func make_camera_follow_path(delta, camera, path, speed):
 		should_camera_move = true
 		CameraSpeed = speed
 	
-	if (should_camera_move && PathToFollow.get_offset() == last_camera_location):
-		print("stopping")
-		should_camera_move = false
-		FollowCamera.current = false
-		$Player/Camera2D.current = true
+	if (should_camera_move):
+		if (PathToFollow.get_offset() == last_camera_location):
+			print("stopping")
+			should_camera_move = false
+			FollowCamera.current = false
+			$Player/Camera2D.current = true
 
-		$Level/Enteties/Guide.push_start()
-#		$Player.setPos(Vector2(-100, -100))
+			$Level/Enteties/Guide.push_start()
+	#		$Player.setPos(Vector2(-100, -100))
 
 	if (should_camera_move):
 		last_camera_location = PathToFollow.get_offset()

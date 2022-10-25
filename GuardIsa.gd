@@ -26,7 +26,7 @@ func introduce_player():
 		yield(get_tree().create_timer(3),"timeout")
 		$SpeechBubble.set_text("..they have been on their toes since..", 3)
 		yield(get_tree().create_timer(3),"timeout")
-		$SpeechBubble.set_text("..the unspoken of event happened.", 3)
+		$SpeechBubble.set_text("..the sun flamed out.", 3)
 		yield(get_tree().create_timer(3),"timeout")
 		$SpeechBubble.set_text("How did you get out there?", 3)
 		yield(get_tree().create_timer(3),"timeout")
@@ -68,13 +68,14 @@ func introduce_player():
 		yield(get_tree().create_timer(4),"timeout")
 		
 		$NPCMoveEngine.move_node_along_path($".", $BringPlayerToSkellies/Follow, 80, true)
+		player.locked_in_place = false
 
 func teach_player_candy():
 		$SpeechBubble.set_text("Alright, so these are skellies that we have captured..", 5)
 		yield(get_tree().create_timer(4),"timeout")
 		$SpeechBubble.set_text("..the rule is for obvious reasons to not hurt the skellies..", 5)
 		yield(get_tree().create_timer(4),"timeout")
-		$SpeechBubble.set_text("..hoping one day they will return ...", 5)
+		$SpeechBubble.set_text("..hoping one day they will return to their graves...", 5)
 		yield(get_tree().create_timer(4),"timeout")
 		
 		$SpeechBubble.set_text("Anyways, to not have to hurt them we have found that..", 5)
@@ -96,14 +97,13 @@ func teach_player_candy():
 		$SpeechBubble.set_text("..as long as there is cotton candy nearby.", 5)
 		yield(get_tree().create_timer(4),"timeout")
 		
-		$SpeechBubble.set_text("Now it is your turn.", 3)
+		$SpeechBubble.set_text("Now it is your turn! 'Left Click' to throw the candy!", 3)
 		yield(get_tree().create_timer(3),"timeout")
 		$SpeechBubble.set_text("Here, take some candy.", 3)
 		yield(get_tree().create_timer(3),"timeout")
 		
 		player.has_candy = true
 		player.candy_left = 3
-		player.locked_in_place = false
 		
 		yield(get_tree().create_timer(10),"timeout")
 		$SpeechBubble.set_text("Great job crazy! The scientist lives south..", 4)

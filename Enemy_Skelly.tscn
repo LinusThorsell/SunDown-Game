@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://assets/img/Enemies/skelly.png" type="Texture" id=1]
 [ext_resource path="res://Enemy_Skelly.gd" type="Script" id=2]
@@ -104,6 +104,10 @@ extents = Vector2( 8.5, 13.5 )
 [sub_resource type="CircleShape2D" id=17]
 radius = 22.0
 
+[sub_resource type="CapsuleShape2D" id=18]
+radius = 6.0
+height = 8.0
+
 [node name="Enemy_Skelly" type="KinematicBody2D"]
 position = Vector2( 36, 42 )
 script = ExtResource( 2 )
@@ -113,10 +117,10 @@ run_speed = 60
 frames = SubResource( 9 )
 animation = "standing_right"
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="DetectionRadius" type="Area2D" parent="."]
 scale = Vector2( 1.5, 1.5 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionRadius"]
 shape = SubResource( 10 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -132,8 +136,14 @@ shape = SubResource( 17 )
 
 [node name="Timer" type="Timer" parent="Hitrange"]
 
-[connection signal="body_entered" from="Area2D" to="." method="_on_DetectRadius_body_entered"]
-[connection signal="body_exited" from="Area2D" to="." method="_on_DetectRadius_body_exited"]
+[node name="RunwayDetection" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RunwayDetection"]
+position = Vector2( 1, 3 )
+shape = SubResource( 18 )
+
+[connection signal="body_entered" from="DetectionRadius" to="." method="_on_DetectRadius_body_entered"]
+[connection signal="body_exited" from="DetectionRadius" to="." method="_on_DetectRadius_body_exited"]
 [connection signal="area_entered" from="Hitrange" to="Hitrange" method="_on_Hitrange_area_entered"]
 [connection signal="area_exited" from="Hitrange" to="Hitrange" method="_on_Hitrange_area_exited"]
 [connection signal="timeout" from="Hitrange/Timer" to="Hitrange" method="_on_Timer_timeout"]

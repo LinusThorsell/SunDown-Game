@@ -52,6 +52,8 @@ func move_node_if_active(delta):
 			# stop condition
 			print("stopping")
 			should_move = false
+			player.following_npc = false
+#			player.get_node("AnimatedSprite").play("standing_down")
 			emit_signal("finished_moving")
 		
 		last_location = path.get_offset()
@@ -63,9 +65,27 @@ func move_node_if_active(delta):
 		
 		var tmp_offset = path.get_offset()
 		if (forceplayer):
+			player.following_npc = true
 			path.set_offset(path.get_offset() - 4000 * delta)
 			player.position = Vector2(path.position.x - 16, path.position.y - 16)
 			path.set_offset(tmp_offset)
+			
+#			var player_anim_vector = Vector2(0, 0)
+			
+			var velocity = Vector2(target.position.x - last_coords.x, target.position.y - last_coords.y)
+			if (velocity.length() > 0):
+				if abs(velocity.x) > abs(velocity.y):
+					if velocity.x < 0:
+						player.get_node("AnimatedSprite").play("walking_left")
+					if velocity.x > 0:
+						player.get_node("AnimatedSprite").play("walking_right")
+				else:	
+					if velocity.y < 0:
+						player.get_node("AnimatedSprite").play("walking_up")
+					if velocity.y > 0:
+						player.get_node("AnimatedSprite").play("walking_down")
+				
+#			player.update_sprite(player_anim_vector, "walking_down")
 	
 func move_node_along_path(target_node, follow_path, follow_speed, force_playerfollow=false):
 	print("walking: node, path, speed")

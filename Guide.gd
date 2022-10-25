@@ -86,15 +86,17 @@ func _process(delta):
 			interaction = 1
 			print("Done: Initial conversation, now playing HelpPlayerRun path")
 			CurrentPath = $Paths/HelpPlayerRunaway/PathFollow2D
+			player_node.following_npc = true
 			should_walk = true
 			player_force_follow_guide = true
 			speed = 150;
 			
 		elif(interaction == 1):
 			player_force_follow_guide = false
+			player_node.following_npc = false
 			player_node.update_sprite(Vector2(0,0), "standing_down")
 			$AnimatedSprite.play("standing_down")
-			
+
 			$SpeechBubble.set_text("Look over there...", 4)
 			yield(get_tree().create_timer(2.0),"timeout")
 			player_node.update_sprite(Vector2(0,0), "standing_right")
@@ -110,20 +112,22 @@ func _process(delta):
 			yield(get_tree().create_timer(6.0),"timeout")
 			$SpeechBubble.set_text("So they currently roam freely, creating havoc here...", 5)
 			yield(get_tree().create_timer(6.0),"timeout")
-			
+
 			$SpeechBubble.set_text("I am currently the guard on duty...", 5)
 			yield(get_tree().create_timer(5.0),"timeout")
 			$SpeechBubble.set_text("So i will not be able to follow you further...", 5)
 			yield(get_tree().create_timer(5.0),"timeout")
 			$SpeechBubble.set_text("Head south west from here and you should be safe.", 5)
 			yield(get_tree().create_timer(5.0),"timeout")
+			$SpeechBubble.set_text("( Tip: Walk using W, A, S, D )", 5)
+			yield(get_tree().create_timer(5.0),"timeout")
 			$SpeechBubble.set_text("Say hey to Isa if you meet her.", 3)
 			yield(get_tree().create_timer(3.0),"timeout")
 #			main_node.get_node("HUD/Consumables").show()
 #			player_node.get_node("ToolOverlay").show()
-			yield(get_tree().create_timer(5.0),"timeout")
+#			yield(get_tree().create_timer(5.0),"timeout")
 			$SpeechBubble.set_text("My name's Guide, now, good luck, you will need it", 5)
-			yield(get_tree().create_timer(5.0),"timeout")
+			yield(get_tree().create_timer(3.0),"timeout")
 		
 			interaction = 2
 			print("Done: SkellyIntro, now playing StandToGuard path")

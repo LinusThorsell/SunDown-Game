@@ -1,14 +1,15 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://assets/MinimalPixel.ttf" type="DynamicFontData" id=1]
+[sub_resource type="DynamicFontData" id=212]
+font_path = "res://assets/ReadablePixel.ttf"
 
 [sub_resource type="DynamicFont" id=1]
 size = 35
-font_data = ExtResource( 1 )
+font_data = SubResource( 212 )
 
 [sub_resource type="DynamicFont" id=2]
 size = 25
-font_data = ExtResource( 1 )
+font_data = SubResource( 212 )
 
 [node name="SelectionBox" type="Node2D"]
 visible = false
@@ -30,13 +31,12 @@ custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = SubResource( 1 )
 
 [node name="TipsRect" type="ColorRect" parent="."]
-margin_left = 50.0
+margin_left = -2.5
 margin_top = 200.0
-margin_right = 400.0
-margin_bottom = 230.0
+margin_right = 401.0
+margin_bottom = 235.0
 
 [node name="TipsLabel" type="RichTextLabel" parent="."]
-margin_left = 50.0
 margin_top = 200.0
 margin_right = 400.0
 margin_bottom = 230.0
